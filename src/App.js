@@ -11,13 +11,15 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import EditIcon from "@material-ui/icons/Edit";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+
+import { getObjectList, getFormLayout } from "./PacificaAPI";
+import DynamicTable from "./Table";
+import SimpleModal from "./Modal";
 
 const drawerWidth = 240;
 
@@ -78,13 +80,32 @@ const styles = theme => ({
   }
 });
 
-class PersistentDrawerLeft extends React.Component {
-  state = {
-    open: false
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      object_list: ["users"],
+      selected_object: "users",
+      create_form_layout: ""
+    };
+  }
+
+  selectObject = text => {
+    getFormLayout("/mdapi", this.state.selected_object, {}).then(res => {
+      this.setState({ create_form_layout: res });
+    });
+
+    this.setState({ selected_object: text });
   };
 
   handleDrawerOpen = () => {
-    this.setState({ open: true });
+    getObjectList("/mdapi").then(res => {
+      this.setState({
+        open: true,
+        object_list: res.data.available_objects
+      });
+    });
   };
 
   handleDrawerClose = () => {
@@ -93,7 +114,12 @@ class PersistentDrawerLeft extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-    const { open } = this.state;
+    const {
+      open,
+      object_list,
+      selected_object,
+      create_form_layout
+    } = this.state;
 
     return (
       <div className={classes.root}>
@@ -106,6 +132,7 @@ class PersistentDrawerLeft extends React.Component {
         >
           <Toolbar disableGutters={!open}>
             <IconButton
+              id="header-open-drawer"
               color="inherit"
               aria-label="Open drawer"
               onClick={this.handleDrawerOpen}
@@ -138,25 +165,20 @@ class PersistentDrawerLeft extends React.Component {
           </div>
           <Divider />
           <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            {Object.entries(object_list)
+              .sort()
+              .map((items, index) => (
+                <ListItem
+                  id={`listitem-${items[0]}`}
+                  button
+                  key={items[0]}
+                  onClick={() => {
+                    this.selectObject(items[0]);
+                  }}
+                >
+                  <ListItemText primary={items[1]} />
+                </ListItem>
+              ))}
           </List>
         </Drawer>
         <main
@@ -165,15 +187,19 @@ class PersistentDrawerLeft extends React.Component {
           })}
         >
           <div className={classes.drawerHeader} />
+          <SimpleModal title="Create" icon={() => <EditIcon />}>
+            {create_form_layout}
+          </SimpleModal>
+          <DynamicTable object={selected_object} md_url="/mdapi" />
         </main>
       </div>
     );
   }
 }
 
-PersistentDrawerLeft.propTypes = {
+App.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(PersistentDrawerLeft);
+export default withStyles(styles, { withTheme: true })(App);
