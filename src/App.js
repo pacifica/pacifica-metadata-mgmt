@@ -17,7 +17,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
-import { getObjectList, getFormLayout } from "./PacificaAPI";
+import { getObjectList } from "./PacificaAPI";
 import DynamicTable from "./Table";
 import SimpleModal from "./Modal";
 
@@ -92,10 +92,6 @@ class App extends React.Component {
   }
 
   selectObject = text => {
-    getFormLayout("/mdapi", this.state.selected_object, {}).then(res => {
-      this.setState({ create_form_layout: res });
-    });
-
     this.setState({ selected_object: text });
   };
 
