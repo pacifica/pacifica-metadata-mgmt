@@ -220,7 +220,8 @@ class SimpleModal extends React.Component {
         console.log(res);
       })
       .catch(res => {
-        alert(JSON.stringify(res, null, 2));
+        console.log(JSON.stringify(res, null, 2));
+        alert(res.response.data.traceback);
       });
   };
 

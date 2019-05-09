@@ -77,7 +77,8 @@ export const convert_columns = (
                         updateFunc();
                       })
                       .catch(res => {
-                        alert(JSON.stringify(res, null, 2));
+                        console.log(JSON.stringify(res, null, 2));
+                        alert(res.response.data.traceback);
                       });
                   }}
                 >
