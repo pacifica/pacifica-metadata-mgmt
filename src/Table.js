@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import EditIcon from "@material-ui/icons/Edit";
 
 import { getData } from "./PacificaAPI";
+import SimpleModal from "./Modal";
 
 class DynamicTable extends Component {
   state = {
@@ -28,7 +30,9 @@ class DynamicTable extends Component {
     }
     this.setState({ loading: true });
     return new Promise((resolve, reject) => {
-      getData(md_url, object, filtered, pageSize, pageNum)
+      getData(md_url, object, filtered, pageSize, pageNum, () => {
+        this.updateData(object);
+      })
         .then(res => {
           resolve(res);
           this.setState({
@@ -55,6 +59,16 @@ class DynamicTable extends Component {
     const { object, obj_list, columns, numPages } = this.state;
     return (
       <div>
+        <SimpleModal
+          title="Create"
+          icon={() => <EditIcon />}
+          md_url="/mdapi"
+          object={object}
+          defaults={{}}
+          closeUpdate={() => {
+            this.updateData(object);
+          }}
+        />
         <ReactTable
           filterable={true}
           data={obj_list}

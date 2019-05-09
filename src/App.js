@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import EditIcon from "@material-ui/icons/Edit";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
@@ -19,7 +18,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import { getObjectList } from "./PacificaAPI";
 import DynamicTable from "./Table";
-import SimpleModal from "./Modal";
 
 const drawerWidth = 240;
 
@@ -86,8 +84,7 @@ class App extends React.Component {
     this.state = {
       open: false,
       object_list: ["users"],
-      selected_object: "users",
-      create_form_layout: ""
+      selected_object: "users"
     };
   }
 
@@ -110,12 +107,7 @@ class App extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-    const {
-      open,
-      object_list,
-      selected_object,
-      create_form_layout
-    } = this.state;
+    const { open, object_list, selected_object } = this.state;
 
     return (
       <div className={classes.root}>
@@ -183,9 +175,6 @@ class App extends React.Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          <SimpleModal title="Create" icon={() => <EditIcon />}>
-            {create_form_layout}
-          </SimpleModal>
           <DynamicTable object={selected_object} md_url="/mdapi" />
         </main>
       </div>
