@@ -17,7 +17,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "CI=true react-scripts test --coverage",
-    "e2e-test": "nightwatch",
+    "e2e-chrome": "nightwatch -e chrome",
+    "e2e-firefox": "nightwatch -e default",
+    "e2e-edge": "nightwatch -e edge",
     "eject": "react-scripts eject",
     "release": "release-it",
     "e2e-setup": "selenium-standalone install"
