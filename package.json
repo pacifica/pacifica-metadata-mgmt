@@ -17,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "CI=true react-scripts test --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "release": "release-it"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,7 +43,8 @@
     "jest-enzyme": "^7.0.2",
     "prettier": "^1.17.0",
     "react-test-renderer": "^16.8.6",
-    "react-testing-library": "^7.0.0"
+    "react-testing-library": "^7.0.0",
+    "release-it": "^12.3.3"
   },
   "jest": {
     "collectCoverageFrom": [

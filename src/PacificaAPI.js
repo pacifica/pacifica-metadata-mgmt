@@ -12,12 +12,21 @@ export const getObjectList = md_url => {
   return Axios.get(`${md_url}/objectinfo/list`);
 };
 
-export const filtered_to_where_args = filtered => {
+export const filtered_to_where_args = (field_list, filtered) => {
   let where_args = {};
   for (let i = 0; i < filtered.length; i++) {
     if (filtered[i].id === "_id") {
       where_args._id = filtered[i].value;
       return where_args;
+    }
+    switch(field_list[filtered[i].id]) {
+      case 'TEXT':
+      case 'VARCHAR':
+        filtered[i].disableLike = false;
+        break;
+      default:
+        filtered[i].disableLike = true;
+        break;
     }
     where_args[filtered[i].id] = filtered[i].value;
     if (!filtered[i].disableLike) {
@@ -123,28 +132,32 @@ export const getData = (
   pageNum,
   updateFunc
 ) => {
-  let where_args = filtered_to_where_args(filtered);
   return new Promise((resolve, reject) => {
-    Axios.get(`${md_url}/objectinfo/${object}`, { params: where_args })
+    Axios.get(`${md_url}/objectinfo/${object}`)
       .then(res => {
-        let record_count = res.data.record_count;
-        let columns = convert_columns(
-          md_url,
-          object,
-          res.data.field_list,
-          res.data.field_types,
-          res.data.primary_keys,
-          updateFunc
-        );
-        where_args.items_per_page = pageSize;
-        where_args.page_number = pageNum + 1;
-        Axios.get(`${md_url}/${object}`, { params: where_args })
+        let where_args = filtered_to_where_args(res.data.field_list, filtered);
+        Axios.get(`${md_url}/objectinfo/${object}`, { params: where_args })
           .then(res => {
-            resolve({
-              numPages: Math.ceil(record_count / pageSize),
-              columns: columns,
-              obj_list: res.data
-            });
+            let record_count = res.data.record_count;
+            let columns = convert_columns(
+              md_url,
+              object,
+              res.data.field_list,
+              res.data.field_types,
+              res.data.primary_keys,
+              updateFunc
+            );
+            where_args.items_per_page = pageSize;
+            where_args.page_number = pageNum + 1;
+            Axios.get(`${md_url}/${object}`, { params: where_args })
+              .then(res => {
+                resolve({
+                  numPages: Math.ceil(record_count / pageSize),
+                  columns: columns,
+                  obj_list: res.data
+                });
+              })
+              .catch(reject);
           })
           .catch(reject);
       })
