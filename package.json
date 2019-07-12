@@ -16,13 +16,13 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "CI=true react-scripts test --coverage",
+    "test": "react-scripts test --coverage",
     "e2e-chrome": "nightwatch -e chrome",
     "e2e-firefox": "nightwatch -e default",
     "e2e-edge": "nightwatch -e edge",
+    "e2e-setup": "selenium-standalone install",
     "eject": "react-scripts eject",
-    "release": "release-it",
-    "e2e-setup": "selenium-standalone install"
+    "release": "release-it"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,12 +42,14 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-add-module-exports": "^1.0.2",
+    "babel-plugin-istanbul": "^5.1.4",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "jest": "^24.7.1",
     "jest-dom": "^3.1.3",
     "jest-enzyme": "^7.0.2",
     "nightwatch": "^1.1.13",
+    "nyc": "^14.1.1",
     "prettier": "^1.17.0",
     "react-test-renderer": "^16.8.6",
     "react-testing-library": "^7.0.0",
