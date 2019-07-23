@@ -83,20 +83,20 @@ class App extends React.Component {
     super(props)
     this.state = {
       open: false,
-      object_list: ['users'],
-      selected_object: 'users'
+      objectList: ['users'],
+      selectedObject: 'users'
     }
   };
 
   selectObject (text) {
-    this.setState({ selected_object: text })
+    this.setState({ selectedObject: text })
   };
 
   handleDrawerOpen () {
     getObjectList('/mdapi').then(res => {
       this.setState({
         open: true,
-        object_list: res.data.available_objects
+        objectList: res.data.availableObjects
       })
     })
   };
@@ -175,7 +175,7 @@ class App extends React.Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          <DynamicTable object={selectedObject} md_url="/mdapi" />
+          <DynamicTable object={selectedObject} MDUrl="/mdapi" />
         </main>
       </div>
     )
