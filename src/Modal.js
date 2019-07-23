@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Axios from 'axios';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Checkbox from '@material-ui/core/Checkbox';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
-import IconButton from '@material-ui/core/IconButton';
-import FormControl from '@material-ui/core/FormControl';
-import CloseIcon from '@material-ui/icons/Close';
-import SaveIcon from '@material-ui/icons/Save';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Axios from 'axios'
+import Grid from '@material-ui/core/Grid'
+import TextField from '@material-ui/core/TextField'
+import Checkbox from '@material-ui/core/Checkbox'
+import { withStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
+import Modal from '@material-ui/core/Modal'
+import IconButton from '@material-ui/core/IconButton'
+import FormControl from '@material-ui/core/FormControl'
+import CloseIcon from '@material-ui/icons/Close'
+import SaveIcon from '@material-ui/icons/Save'
 
 const styles = theme => ({
   paper: {
@@ -65,7 +65,7 @@ class SimpleModal extends React.Component {
                     />
                   </Grid>
                 )
-                break;
+                break
               case 'DATE':
                 fieldDef = (
                   <Grid item xs={12} sm={6}>
@@ -80,7 +80,7 @@ class SimpleModal extends React.Component {
                     />
                   </Grid>
                 )
-                break;
+                break
               case 'VARCHAR':
               case 'TEXT':
                 let actualKey = key
@@ -100,7 +100,7 @@ class SimpleModal extends React.Component {
                     />
                   </Grid>
                 )
-                break;
+                break
               case 'UUID':
                 fieldDef = (
                   <Grid item xs={12} sm={6}>
@@ -114,7 +114,7 @@ class SimpleModal extends React.Component {
                     />
                   </Grid>
                 )
-                break;
+                break
               case 'INT':
               case 'BIGINT':
                 fieldDef = (
@@ -130,7 +130,7 @@ class SimpleModal extends React.Component {
                     />
                   </Grid>
                 )
-                break;
+                break
               case 'BOOL':
                 fieldDef = (
                   <Grid item xs={12} sm={6}>
@@ -145,7 +145,7 @@ class SimpleModal extends React.Component {
                     />
                   </Grid>
                 )
-                break;
+                break
               case 'AUTO':
                 fieldDef = (
                   <Grid item xs={12} sm={6}>
@@ -159,7 +159,7 @@ class SimpleModal extends React.Component {
                     />
                   </Grid>
                 )
-                break;
+                break
               default:
                 console.log(fieldTypes[key])
                 fieldDef = (
@@ -167,7 +167,7 @@ class SimpleModal extends React.Component {
                     <Typography>Something Unknown!</Typography>
                   </Grid>
                 )
-                break;
+                break
             }
             return fieldDef
           })}
@@ -182,7 +182,7 @@ class SimpleModal extends React.Component {
         this.setState({
           formData: this.props.defaults
         })
-          this.setState({
+        this.setState({
           formInputs: this.formLayoutColumns(
             res.data.fieldList,
             res.data.fieldTypes,
@@ -190,8 +190,8 @@ class SimpleModal extends React.Component {
           ),
           primaryKeys: res.data.primaryKeys
         })
-          resolve(res)
-        }).catch(reject)
+        resolve(res)
+      }).catch(reject)
     })
   };
 
