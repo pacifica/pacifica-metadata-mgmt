@@ -14,6 +14,7 @@ node_js:
 cache: npm
 env:
   PEEWEE_URL: postgres://postgres:@localhost/pacifica_metadata
+  NOTIFICATIONS_DISABLED: true
   MOZ_HEADLESS: 1
 before_script:
 - psql -c 'create database pacifica_metadata;' -U postgres
