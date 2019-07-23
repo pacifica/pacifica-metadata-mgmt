@@ -1,13 +1,13 @@
 module.exports = {
-    'Demo test Google' : function (browser) {
+    'Demo test Main Load' : function (browser) {
           browser
-            .url('https://www.google.com')
+            .url('http://localhost:8080')
             .waitForElementVisible('body')
-            .setValue('input[type=text]', 'nightwatch')
-            .waitForElementVisible('input[name=btnK]')
-            .click('input[name=btnK]')
+            .click('button[id=header-open-drawer]')
+            .waitForElementVisible('div[id=listitem-projects]')
+            .click('div[id=listitem-projects')
             .pause(1000)
-            .assert.containsText('#main', 'Night Watch')
+            .assert.containsText('#main', '1234a')
             .end();
         }
 };

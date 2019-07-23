@@ -1,5 +1,5 @@
-error_log @@CODE_ROOT@@/scripts/error.log;
-pid @@CODE_ROOT@@/scripts/nginx.pid;
+error_log @@CODE_ROOT@@/nginx-error.log;
+pid @@CODE_ROOT@@/nginx.pid;
 daemon off;
 events {
         worker_connections 768;
@@ -26,7 +26,7 @@ server {
         root /var/www/html;
         index index.html index.htm index.nginx-debian.html;
 
-        access_log @@CODE_ROOT@@/access.log;
+        access_log @@CODE_ROOT@@/nginx-access.log;
         client_body_temp_path @@CODE_ROOT@@/temp_client;
         fastcgi_temp_path @@CODE_ROOT@@/temp_fastcgi;
         proxy_temp_path @@CODE_ROOT@@/temp_proxy;
