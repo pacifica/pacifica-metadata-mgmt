@@ -216,14 +216,12 @@ class SimpleModal extends React.Component {
     }
     method(`${this.props.MDUrl}/${this.props.object}`, this.state.formData, {
       params: params
+    }).then(res => {
+      console.log(res)
+    }).catch(res => {
+      console.log(JSON.stringify(res, null, 2))
+      alert(res.response.data.traceback)
     })
-      .then(res => {
-        console.log(res)
-      })
-      .catch(res => {
-        console.log(JSON.stringify(res, null, 2))
-        alert(res.response.data.traceback)
-      })
   };
 
   handleOpen () {
