@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import { getObjectList, getData } from './PacificaAPI';
+import { getObjectList, getData } from './PacificaAPI'
 
 it('gets an object list', () => {
   expect.assertions(1)
