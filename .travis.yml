@@ -6,6 +6,9 @@ services:
 addons:
   chrome: stable
   firefox: latest
+  apt:
+    packages:
+      - nginx
 node_js:
 - "10"
 cache: npm
