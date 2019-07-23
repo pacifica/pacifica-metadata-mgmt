@@ -3,19 +3,6 @@
  */
 import { getObjectList, getData } from './PacificaAPI'
 
-import { chalk } from 'chalk'
-
-process.on(
-  'unhandledRejection',
-  function handleWarning (reason, promise) {
-    console.log(chalk.red.bold('[PROCESS] Unhandled Promise Rejection'))
-    console.log(chalk.red.bold('- - - - - - - - - - - - - - - - - - -'))
-    console.log(reason)
-    console.log(chalk.red.bold('- -'))
-    throw reason
-  }
-)
-
 it('gets an object list', () => {
   expect.assertions(1)
   return getObjectList('http://localhost:8121').then(res => {
