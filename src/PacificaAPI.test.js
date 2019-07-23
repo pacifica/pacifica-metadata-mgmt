@@ -12,6 +12,7 @@ process.on(
     console.log(chalk.red.bold('- - - - - - - - - - - - - - - - - - -'))
     console.log(reason)
     console.log(chalk.red.bold('- -'))
+    throw reason
   }
 )
 
