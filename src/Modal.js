@@ -32,6 +32,12 @@ class SimpleModal extends React.Component {
       formData: {},
       primaryKeys: []
     }
+    this.updateFormInput = this.updateFormInput.bind(this)
+    this.formLayoutColumns = this.formLayoutColumns.bind(this)
+    this.getFormLayout = this.getFormLayout.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.handleSave = this.handleSave.bind(this)
+    this.handleOpen = this.handleOpen.bind(this)
   }
 
   updateFormInput (input, value) {
@@ -184,11 +190,11 @@ class SimpleModal extends React.Component {
         })
         this.setState({
           formInputs: this.formLayoutColumns(
-            res.data.fieldList,
-            res.data.fieldTypes,
-            res.data.primaryKeys
+            res.data.field_list,
+            res.data.field_types,
+            res.data.primary_keys
           ),
-          primaryKeys: res.data.primaryKeys
+          primaryKeys: res.data.primary_keys
         })
         resolve(res)
       }).catch(reject)
@@ -274,7 +280,9 @@ class SimpleModal extends React.Component {
 }
 
 SimpleModal.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  MDUrl: PropTypes.string.isRequired,
+  object: PropTypes.string.isRequired
 }
 
 export default withStyles(styles)(SimpleModal)

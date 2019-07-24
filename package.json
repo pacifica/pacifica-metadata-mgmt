@@ -16,7 +16,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "cross-env CI=true react-scripts test --coverage",
+    "test": "react-scripts test",
+    "coverage": "nyc npm run test",
     "eslint": "eslint src/ tests/",
     "e2e-metadb-start": "docker run -it --rm --name postgres -e POSTGRES_PASSWORD=metadata -e POSTGRES_DB=pacifica_metadata -e POSTGRES_USER=pacifica postgres:latest",
     "e2e-metadb-stop": "docker stop postgres",
@@ -84,5 +85,11 @@
     "coverageReporters": [
       "text"
     ]
+  },
+  "nyc": {
+    "branches": 100,
+    "lines": 100,
+    "functions": 100,
+    "statements": 100
   }
 }

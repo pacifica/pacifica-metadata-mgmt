@@ -86,6 +86,7 @@ class App extends React.Component {
       objectList: ['users'],
       selectedObject: 'users'
     }
+    this.handleDrawerOpen = this.handleDrawerOpen.bind(this)
   };
 
   selectObject (text) {
@@ -96,7 +97,7 @@ class App extends React.Component {
     getObjectList(this.props.MDUrl).then(res => {
       this.setState({
         open: true,
-        objectList: res.data.availableObjects
+        objectList: res.data.available_objects
       })
     }).catch(res => { console.log(res) })
   };
@@ -143,7 +144,7 @@ class App extends React.Component {
           }}
         >
           <div className={classes.drawerHeader}>
-            <IconButton onClick={() => { this.handleDrawerClose() }}>
+            <IconButton onClick={this.handleDrawerClose.bind(this)}>
               {theme.direction === 'ltr' ? (
                 <ChevronLeftIcon />
               ) : (
@@ -153,11 +154,10 @@ class App extends React.Component {
           </div>
           <Divider />
           <List>
-            {Object.entries(objectList)
-              .sort()
-              .map((items, index) => (
+            {Object.entries(objectList).sort().map((items, index) => {
+              return (
                 <ListItem
-                  id={`listitem-${items[0]}`}
+                  id={`listitem-${items[0].replace('_', '-')}`}
                   button
                   key={items[0]}
                   onClick={() => {
@@ -166,7 +166,8 @@ class App extends React.Component {
                 >
                   <ListItemText primary={items[1]} />
                 </ListItem>
-              ))}
+              )
+            })}
           </List>
         </Drawer>
         <main

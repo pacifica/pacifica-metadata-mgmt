@@ -64,7 +64,7 @@ class DynamicTable extends Component {
       <div>
         <SimpleModal
           title="Create"
-          icon={() => <EditIcon />}
+          icon={() => { return (<EditIcon />) }}
           MDUrl={MDUrl}
           object={object}
           defaults={{}}
