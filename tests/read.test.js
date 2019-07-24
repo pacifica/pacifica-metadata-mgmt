@@ -2,7 +2,7 @@ module.exports = {
   'Load Main Page Projects': function (browser) {
     browser
       .url('http://localhost:8080')
-      .waitForElementVisible('body')
+      .waitForElementVisible('button[id=header-open-drawer]')
       .click('button[id=header-open-drawer]')
       .waitForElementVisible('div[id=listitem-projects]')
       .click('div[id=listitem-projects')
@@ -13,7 +13,7 @@ module.exports = {
   'Load Main Page Relationships': function (browser) {
     browser
       .url('http://localhost:8080')
-      .waitForElementVisible('body')
+      .waitForElementVisible('button[id=header-open-drawer]')
       .click('button[id=header-open-drawer]')
       .waitForElementVisible('div[id=listitem-relationships]')
       .click('div[id=listitem-relationships')
@@ -24,7 +24,7 @@ module.exports = {
   'Load Main Page Files': function (browser) {
     browser
       .url('http://localhost:8080')
-      .waitForElementVisible('body')
+      .waitForElementVisible('button[id=header-open-drawer]')
       .click('button[id=header-open-drawer]')
       .waitForElementVisible('div[id=listitem-files]')
       .click('div[id=listitem-files')
