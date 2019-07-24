@@ -59,22 +59,24 @@ class SimpleModal extends React.Component {
             switch (fieldTypes[key]) {
               case 'DATETIME':
                 fieldDef = (
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      InputLabelProps={{ shrink: true }}
-                      label={key}
-                      type="datetime-local"
-                      defaultValue={defaults[key]}
-                      onChange={event => {
-                        this.updateFormInput(key, event.target.value)
-                      }}
-                    />
+                  <Grid item xs={12} sm={6} key={key}>
+                    <div key={key}>
+                      <TextField
+                        InputLabelProps={{ shrink: true }}
+                        label={key}
+                        type="datetime-local"
+                        defaultValue={defaults[key]}
+                        onChange={event => {
+                          this.updateFormInput(key, event.target.value)
+                        }}
+                      />
+                    </div>
                   </Grid>
                 )
                 break
               case 'DATE':
                 fieldDef = (
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} key={key}>
                     <TextField
                       InputLabelProps={{ shrink: true }}
                       label={key}
@@ -94,7 +96,7 @@ class SimpleModal extends React.Component {
                   actualKey = `_${key}`
                 }
                 fieldDef = (
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} key={key}>
                     <TextField
                       InputLabelProps={{ shrink: true }}
                       label={key}
@@ -109,7 +111,7 @@ class SimpleModal extends React.Component {
                 break
               case 'UUID':
                 fieldDef = (
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} key={key}>
                     <TextField
                       InputLabelProps={{ shrink: true }}
                       label={key}
@@ -124,7 +126,7 @@ class SimpleModal extends React.Component {
               case 'INT':
               case 'BIGINT':
                 fieldDef = (
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} key={key}>
                     <TextField
                       type="number"
                       label={key}
@@ -139,7 +141,7 @@ class SimpleModal extends React.Component {
                 break
               case 'BOOL':
                 fieldDef = (
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} key={key}>
                     <Typography>{key}</Typography>
                     <Checkbox
                       label={key}
@@ -154,7 +156,7 @@ class SimpleModal extends React.Component {
                 break
               case 'AUTO':
                 fieldDef = (
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} key={key}>
                     <TextField
                       label={key}
                       defaultValue={defaults[`_${key}`]}
@@ -169,7 +171,7 @@ class SimpleModal extends React.Component {
               default:
                 console.log(fieldTypes[key])
                 fieldDef = (
-                  <Grid item xs={12}>
+                  <Grid item xs={12} key={key}>
                     <Typography>Something Unknown!</Typography>
                   </Grid>
                 )
@@ -264,10 +266,10 @@ class SimpleModal extends React.Component {
             <form>
               <FormControl component="fieldset">
                 {this.state.formInputs}
-                <IconButton onClick={this.handleClose}>
+                <IconButton onClick={this.handleClose} key="close-button">
                   <CloseIcon />
                 </IconButton>
-                <IconButton onClick={this.handleSave}>
+                <IconButton onClick={this.handleSave} key="save-button">
                   <SaveIcon />
                 </IconButton>
               </FormControl>
