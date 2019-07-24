@@ -21,6 +21,7 @@ function DateTimeDisplay (props) {
   return (
     <TextField
       id={`${key}-datetime`}
+      key={key}
       label={key}
       type={type}
       defaultValue={defValue}

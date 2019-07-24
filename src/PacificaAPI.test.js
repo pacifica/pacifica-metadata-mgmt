@@ -1,6 +1,3 @@
-/**
- * @jest-environment node
- */
 import { getObjectList, getData } from './PacificaAPI'
 
 it('gets an object list', () => {

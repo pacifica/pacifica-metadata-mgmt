@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { mount } from 'enzyme'
 import DateTimeDisplay from './DateTime'
+import { act } from 'react-testing-library'
 
 it('renders without crashing', () => {
-  const wrapper = mount(<DateTimeDisplay />)
   const div = document.createElement('div')
-  ReactDOM.render(wrapper, div)
+  act(() => {
+    ReactDOM.render(<DateTimeDisplay key='something-unique' defValue='' />, div)
+  })
   ReactDOM.unmountComponentAtNode(div)
 })

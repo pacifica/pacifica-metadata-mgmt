@@ -46,3 +46,6 @@ before_script:
   npm run e2e-nginx-conf
   npm run e2e-selenium-start &
   npm run e2e-nginx-start &
+script:
+ - npm run eslint
+ - npm run test

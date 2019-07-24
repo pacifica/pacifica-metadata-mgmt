@@ -129,7 +129,7 @@ class App extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
+            <Typography variant="h6" color="inherit" noWrap id='title-text'>
               Pacifica Metadata Management
             </Typography>
           </Toolbar>

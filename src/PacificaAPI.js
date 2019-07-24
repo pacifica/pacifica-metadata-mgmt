@@ -63,7 +63,7 @@ export const convertColumns = (
           })
           return (
             <Grid container spacing={8}>
-              <Grid item xs={8} sm={4}>
+              <Grid item xs={8} sm={4} key="edit-modal">
                 <SimpleModal
                   title="Edit"
                   MDUrl={MDUrl}
@@ -73,7 +73,7 @@ export const convertColumns = (
                   closeUpdate={updateFunc}
                 />
               </Grid>
-              <Grid item xs={8} sm={4}>
+              <Grid item xs={8} sm={4} key="delete-button">
                 <IconButton
                   color="inherit"
                   aria-label="Delete item"

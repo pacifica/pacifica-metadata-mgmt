@@ -260,7 +260,7 @@ class SimpleModal extends React.Component {
           onClose={this.handleClose}
         >
           <div style={modalStyle} className={classes.paper}>
-            <Typography variant="h6" id="modal-title">
+            <Typography variant="h6" color="inherit" noWrap id="modal-title">
               {title}
             </Typography>
             <form>
