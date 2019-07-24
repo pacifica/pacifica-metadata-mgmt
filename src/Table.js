@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
+import PropTypes from 'prop-types'
 import EditIcon from '@material-ui/icons/Edit'
 
 import { getData } from './PacificaAPI'
@@ -34,7 +35,7 @@ class DynamicTable extends Component {
     this.setState({ loading: true })
     return new Promise((resolve, reject) => {
       getData(MDUrl, object, filtered, pageSize, pageNum, () => {
-        this.updateData(object)
+        this.updateData(object).catch(reject)
       }).then(res => {
         resolve(res)
         this.setState({
@@ -57,13 +58,14 @@ class DynamicTable extends Component {
   }
 
   render () {
+    const { MDUrl } = this.props
     const { object, objList, columns, numPages } = this.state
     return (
       <div>
         <SimpleModal
           title="Create"
           icon={() => <EditIcon />}
-          MDUrl="/mdapi"
+          MDUrl={MDUrl}
           object={object}
           defaults={{}}
           closeUpdate={() => {
@@ -87,5 +89,7 @@ class DynamicTable extends Component {
     )
   }
 }
-
+DynamicTable.propTypes = {
+  MDUrl: PropTypes.string.isRequired
+}
 export default DynamicTable

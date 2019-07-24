@@ -6,7 +6,7 @@ import { getObjectList, getData } from './PacificaAPI'
 it('gets an object list', () => {
   expect.assertions(1)
   return getObjectList('http://localhost:8121').then(res => {
-    expect(res.data.availableObjects.relationships).toEqual('Relationships')
+    expect(res.data.available_objects.relationships).toEqual('Relationships')
   }).catch(res => {
     console.log(res)
   })

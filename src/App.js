@@ -93,12 +93,12 @@ class App extends React.Component {
   };
 
   handleDrawerOpen () {
-    getObjectList('/mdapi').then(res => {
+    getObjectList(this.props.MDUrl).then(res => {
       this.setState({
         open: true,
         objectList: res.data.availableObjects
       })
-    })
+    }).catch(res => { console.log(res) })
   };
 
   handleDrawerClose () {
@@ -106,7 +106,7 @@ class App extends React.Component {
   };
 
   render () {
-    const { classes, theme } = this.props
+    const { classes, theme, MDUrl } = this.props
     const { open, objectList, selectedObject } = this.state
 
     return (
@@ -123,7 +123,7 @@ class App extends React.Component {
               id="header-open-drawer"
               color="inherit"
               aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
+              onClick={() => { this.handleDrawerOpen() }}
               className={classNames(classes.menuButton, open && classes.hide)}
             >
               <MenuIcon />
@@ -143,7 +143,7 @@ class App extends React.Component {
           }}
         >
           <div className={classes.drawerHeader}>
-            <IconButton onClick={this.handleDrawerClose}>
+            <IconButton onClick={() => { this.handleDrawerClose() }}>
               {theme.direction === 'ltr' ? (
                 <ChevronLeftIcon />
               ) : (
@@ -175,7 +175,7 @@ class App extends React.Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          <DynamicTable object={selectedObject} MDUrl="/mdapi" />
+          <DynamicTable object={selectedObject} MDUrl={MDUrl} />
         </main>
       </div>
     )
@@ -184,7 +184,8 @@ class App extends React.Component {
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  theme: PropTypes.object.isRequired,
+  MDUrl: PropTypes.string.isRequired
 }
 
 export default withStyles(styles, { withTheme: true })(App)

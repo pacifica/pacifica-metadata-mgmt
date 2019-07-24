@@ -1,22 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { mount } from 'enzyme'
 import DynamicTable from './Table'
 
-import { chalk } from 'chalk'
-
-process.on(
-  'unhandledRejection',
-  function handleWarning (reason, promise) {
-    console.log(chalk.red.bold('[PROCESS] Unhandled Promise Rejection'))
-    console.log(chalk.red.bold('- - - - - - - - - - - - - - - - - - -'))
-    console.log(reason)
-    console.log(chalk.red.bold('- -'))
-    throw reason
-  }
-)
-
 it('renders without crashing', () => {
+  const wrapper = mount(<DynamicTable MDUrl="http://localhost:8121" object="users" />)
   const div = document.createElement('div')
-  ReactDOM.render(<DynamicTable />, div)
+  ReactDOM.render(wrapper, div)
   ReactDOM.unmountComponentAtNode(div)
 })
