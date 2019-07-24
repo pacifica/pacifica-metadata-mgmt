@@ -87,11 +87,11 @@ class App extends React.Component {
       selectedObject: 'users'
     }
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this)
-  };
+  }
 
   selectObject (text) {
     this.setState({ selectedObject: text })
-  };
+  }
 
   handleDrawerOpen () {
     getObjectList(this.props.MDUrl).then(res => {
@@ -99,12 +99,12 @@ class App extends React.Component {
         open: true,
         objectList: res.data.available_objects
       })
-    }).catch(res => { console.log(res) })
-  };
+    }).catch(res => { this.setState({ open: false }) })
+  }
 
   handleDrawerClose () {
     this.setState({ open: false })
-  };
+  }
 
   render () {
     const { classes, theme, MDUrl } = this.props

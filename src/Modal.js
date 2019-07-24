@@ -48,7 +48,7 @@ class SimpleModal extends React.Component {
         [input]: value
       }
     }))
-  };
+  }
   formLayoutColumns (fieldList, fieldTypes, primaryKeys) {
     let defaults = this.state.formData
     return (
@@ -56,6 +56,7 @@ class SimpleModal extends React.Component {
         <Grid container spacing={24}>
           {fieldList.map((key, index) => {
             let fieldDef
+            let actualKey
             switch (fieldTypes[key]) {
               case 'DATETIME':
                 fieldDef = (
@@ -91,7 +92,7 @@ class SimpleModal extends React.Component {
                 break
               case 'VARCHAR':
               case 'TEXT':
-                let actualKey = key
+                actualKey = key
                 if (primaryKeys.includes(key)) {
                   actualKey = `_${key}`
                 }
@@ -169,6 +170,7 @@ class SimpleModal extends React.Component {
                 )
                 break
               default:
+                // eslint-disable-next-line no-console
                 console.log(fieldTypes[key])
                 fieldDef = (
                   <Grid item xs={12} key={key}>
@@ -182,7 +184,7 @@ class SimpleModal extends React.Component {
         </Grid>
       </FormControl>
     )
-  };
+  }
 
   getFormLayout () {
     return new Promise((resolve, reject) => {
@@ -201,12 +203,12 @@ class SimpleModal extends React.Component {
         resolve(res)
       }).catch(reject)
     })
-  };
+  }
 
   handleClose () {
     this.setState({ open: false })
     this.props.closeUpdate()
-  };
+  }
 
   handleSave () {
     let method = Axios.put
@@ -225,18 +227,20 @@ class SimpleModal extends React.Component {
     method(`${this.props.MDUrl}/${this.props.object}`, this.state.formData, {
       params: params
     }).then(res => {
+      // eslint-disable-next-line no-console
       console.log(res)
     }).catch(res => {
+      // eslint-disable-next-line no-console
       console.log(JSON.stringify(res, null, 2))
       alert(res.response.data.traceback)
     })
-  };
+  }
 
   handleOpen () {
     this.getFormLayout().then(res => {
       this.setState({ open: true })
     })
-  };
+  }
   render () {
     const { classes, title, icon } = this.props
     const modalStyle = {
@@ -284,7 +288,11 @@ class SimpleModal extends React.Component {
 SimpleModal.propTypes = {
   classes: PropTypes.object.isRequired,
   MDUrl: PropTypes.string.isRequired,
-  object: PropTypes.string.isRequired
+  object: PropTypes.string.isRequired,
+  defaults: PropTypes.object,
+  title: PropTypes.string.isRequired,
+  icon: PropTypes.method.isRequired,
+  closeUpdate: PropTypes.method
 }
 
 export default withStyles(styles)(SimpleModal)

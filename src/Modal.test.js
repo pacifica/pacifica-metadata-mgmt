@@ -4,8 +4,8 @@ import EditIcon from '@material-ui/icons/Edit'
 import SimpleModal from './Modal'
 import { act } from 'react-testing-library'
 
-describe('<SimpleModal />', () => {
-  it('renders without crashing', () => {
+describe('<SimpleModal />', function() {
+  it('renders without crashing', function() {
     const div = document.createElement('div')
     act(() => {
       ReactDOM.render(<SimpleModal
@@ -15,9 +15,8 @@ describe('<SimpleModal />', () => {
         object="keys"
         defaults={{}}
         closeUpdate={() => {
-          console.log('Closed Modal')
-        }}
-        MDUrl="http://localhost:8121" />, div)
+          return
+        }} />, div)
     })
     ReactDOM.unmountComponentAtNode(div)
   })

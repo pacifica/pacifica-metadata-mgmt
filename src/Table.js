@@ -49,13 +49,13 @@ class DynamicTable extends Component {
         })
       }).catch(reject)
     })
-  };
-
-  componentWillReceiveProps (props) {
-    if (props.object !== this.state.object) {
-      this.updateData(props.object).catch(err => console.log(err))
-    }
   }
+
+  //componentWillReceiveProps (props) {
+  //  if (props.object !== this.state.object) {
+  //    this.updateData(props.object).catch(err => console.log(err))
+  //  }
+  //}
 
   render () {
     const { MDUrl } = this.props
@@ -69,7 +69,10 @@ class DynamicTable extends Component {
           object={object}
           defaults={{}}
           closeUpdate={() => {
-            this.updateData(object).catch(err => console.log(err))
+            this.updateData(object).catch(err => {
+              // eslint-disable-next-line no-console
+              console.log(err)
+            })
           }}
         />
         <ReactTable
@@ -79,7 +82,10 @@ class DynamicTable extends Component {
           columns={columns}
           manual
           onFetchData={(state, instance) => {
-            this.updateData(object, state).catch(err => console.log(err))
+            this.updateData(object, state).catch(err => {
+              // eslint-disable-next-line no-console
+              console.log(err)
+            })
           }}
           onFilteredChange={filtered => this.setState({ filtered: filtered })}
           onPageChange={pageNum => this.setState({ pageNum: pageNum })}
@@ -90,6 +96,7 @@ class DynamicTable extends Component {
   }
 }
 DynamicTable.propTypes = {
-  MDUrl: PropTypes.string.isRequired
+  MDUrl: PropTypes.string.isRequired,
+  object: PropTypes.object.isRequired
 }
 export default DynamicTable

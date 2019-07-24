@@ -51,7 +51,8 @@ export const convertColumns = (
     let colDef = { Header: key, accessor: key }
     switch (key) {
       case 'Edit':
-        colDef.Cell = row => {
+        // eslint-disable-next-line react/display-name
+        colDef.Cell = function(row) {
           let deleteArgs = { force: 'True' }
           primaryKeys.map((key, index) => {
             if (key === 'id') {
@@ -82,10 +83,12 @@ export const convertColumns = (
                       params: deleteArgs
                     })
                       .then(res => {
+                        // eslint-disable-next-line no-console
                         console.log(res)
                         updateFunc()
                       })
                       .catch(res => {
+                        // eslint-disable-next-line no-console
                         console.log(JSON.stringify(res, null, 2))
                         alert(res.response.data.traceback)
                       })
@@ -108,14 +111,16 @@ export const convertColumns = (
     }
     switch (fieldTypes[key]) {
       case 'DATETIME':
-        colDef.Cell = row => (
+        // eslint-disable-next-line react/display-name
+        colDef.Cell = function(row) { return (
           <DateTimeDisplay key={key} defValue={row.row[key]} />
-        )
+        )}
         break
       case 'BOOL':
-        colDef.Cell = row => (
+        // eslint-disable-next-line react/display-name
+        colDef.Cell = function(row) { return (
           <Checkbox label={key} value={key} checked={row.row[key]} />
-        )
+        )}
         break
       default:
         break

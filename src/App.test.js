@@ -1,17 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { mount } from 'enzyme'
 import App from './App'
-import { act } from 'react-testing-library'
+import { act, wait } from 'react-testing-library'
 
-describe('<App />', () => {
-  it('renders without crashing', () => {
+describe('<App />', function() {
+  it('renders without crashing', async function () {
     expect.assertions(1)
     const div = document.createElement('div')
     act(() => {
-      ReactDOM.render(<App MDUrl="http://localhost:8121" />, div, () => {
-        expect(div.querySelector('#title-text').textContent).toEqual('Pacifica Metadata Management')
-      })
+      ReactDOM.render(<App MDUrl="http://localhost:8121" />, div)
+    })
+    await wait(() => {
+      expect(div.querySelector('#title-text').textContent).toEqual('Pacifica Metadata Management')
     })
     ReactDOM.unmountComponentAtNode(div)
   })

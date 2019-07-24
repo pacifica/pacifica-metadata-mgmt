@@ -37,7 +37,10 @@ function DateTimeDisplay (props) {
 }
 
 DateTimeDisplay.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  key: PropTypes.string,
+  defValue: PropTypes.string,
+  type: PropTypes.string
 }
 
 export default withStyles(styles)(DateTimeDisplay)
