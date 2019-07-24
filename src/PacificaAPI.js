@@ -58,7 +58,7 @@ export const convertColumns = (
               <Grid item xs={8} sm={4}>
                 <SimpleModal
                   title="Edit"
-                  md_url={MDUrl}
+                  MDUrl={MDUrl}
                   object={object}
                   defaults={row.row}
                   icon={() => <EditIcon />}
@@ -143,7 +143,7 @@ export const getData = (
           resolve({
             numPages: Math.ceil(recordCount / pageSize),
             columns: columns,
-            obj_list: res.data
+            objList: res.data
           })
         }).catch(reject)
       }).catch(reject)
