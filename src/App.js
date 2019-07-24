@@ -86,10 +86,13 @@ class App extends React.Component {
       objectList: ['users'],
       selectedObject: 'users'
     }
+    this.dynamicTableElement = React.createRef()
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this)
   }
 
   selectObject (text) {
+    // eslint-disable-next-line no-console
+    this.dynamicTableElement.current.updateData(text).catch(err => console.log(err))
     this.setState({ selectedObject: text })
   }
 
@@ -176,7 +179,7 @@ class App extends React.Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          <DynamicTable object={selectedObject} MDUrl={MDUrl} />
+          <DynamicTable ref={this.dynamicTableElement} object={selectedObject} MDUrl={MDUrl} />
         </main>
       </div>
     )

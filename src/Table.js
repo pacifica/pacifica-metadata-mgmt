@@ -51,12 +51,6 @@ class DynamicTable extends Component {
     })
   }
 
-  //componentWillReceiveProps (props) {
-  //  if (props.object !== this.state.object) {
-  //    this.updateData(props.object).catch(err => console.log(err))
-  //  }
-  //}
-
   render () {
     const { MDUrl } = this.props
     const { object, objList, columns, numPages } = this.state
