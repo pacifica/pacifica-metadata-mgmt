@@ -97,6 +97,6 @@ class DynamicTable extends Component {
 }
 DynamicTable.propTypes = {
   MDUrl: PropTypes.string.isRequired,
-  object: PropTypes.object.isRequired
+  object: PropTypes.string.isRequired
 }
 export default DynamicTable

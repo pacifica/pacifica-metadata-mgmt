@@ -291,8 +291,8 @@ SimpleModal.propTypes = {
   object: PropTypes.string.isRequired,
   defaults: PropTypes.object,
   title: PropTypes.string.isRequired,
-  icon: PropTypes.method.isRequired,
-  closeUpdate: PropTypes.method
+  icon: PropTypes.func.isRequired,
+  closeUpdate: PropTypes.func
 }
 
 export default withStyles(styles)(SimpleModal)
