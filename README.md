@@ -39,6 +39,11 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## End-to-End Testing
 
+This documentation is designed for developers to build and test the
+Pacifica Metadata Management tool. The processes for building a React
+and NodeJS site must be followed prior to following the instructions
+below.
+
 ### Development Environment Requirements
 
 You should have the following available installed and available in your path.

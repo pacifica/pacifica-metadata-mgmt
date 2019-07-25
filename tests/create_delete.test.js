@@ -21,8 +21,8 @@ module.exports = {
         browser.waitForElementPresent('div[id=react-confirm-alert]')
         browser.assert.containsText('#react-confirm-alert', '{"force":"True","_id":1}')
         browser.click('div#react-confirm-alert button') // This should be the yes button
-        browser.assert.not.containsText('#root', 'Some New Key')
-        browser.assert.not.containsText('#root', 'some_new_key')
+        browser.expect.element('#root').text.to.not.contain('Some New Key');
+        browser.expect.element('#root').text.to.not.contain('some_new_key');
         browser.end()
     }
 }
