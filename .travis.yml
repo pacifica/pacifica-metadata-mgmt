@@ -2,11 +2,20 @@ language: node_js
 dist: xenial
 services:
 - postgresql
+- xvfb
+addons:
+  chrome: stable
+  firefox: latest
+  apt:
+    packages:
+      - nginx
 node_js:
 - "10"
 cache: npm
 env:
   PEEWEE_URL: postgres://postgres:@localhost/pacifica_metadata
+  NOTIFICATIONS_DISABLED: true
+  MOZ_HEADLESS: 1
 before_script:
 - psql -c 'create database pacifica_metadata;' -U postgres
 - export METADATA_CPCONFIG="$PWD/travis/server.conf"
@@ -32,3 +41,15 @@ before_script:
   git checkout v${VERSION}
   python tests/test_files/loadit_test.py
   popd
+- |
+  npm run e2e-selenium-install
+  npm run e2e-nginx-conf
+  npm run e2e-selenium-start &
+  npm run e2e-nginx-start &
+script:
+ - npm run eslint
+ - npm run test
+ - npm run build
+ - npm run start &
+ - npm run e2e-firefox
+ - npm run e2e-chrome

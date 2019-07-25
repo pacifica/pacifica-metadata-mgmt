@@ -37,6 +37,18 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## End-to-End Testing
+
+```
+npm run e2e-setup
+node ./node_modules/.bin/selenium-standalone start &
+docker run -it --rm -e POSTGRES_PASSWORD=metadata -e POSTGRES_DB=pacifica_metadata -e POSTGRES_USER=pacifica -p 5432:5432 -d postgres:latest
+pacifica-metadata-cmd dbsync
+uwsgi --http-socket :8121 --module pacifica.metadata.wsgi
+loadit_test.py
+npm run e2e-chrome
+```
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).

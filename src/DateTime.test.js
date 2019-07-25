@@ -1,9 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import DateTimeDisplay from "./DateTime";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import DateTimeDisplay from './DateTime'
+import { act } from '@testing-library/react'
 
-it("renders without crashing", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(<DateTimeDisplay />, div);
-  ReactDOM.unmountComponentAtNode(div);
-});
+describe('<DateTimeDisplay />', function() {
+  it('renders without crashing', function() {
+    const div = document.createElement('div')
+    act(() => {
+      ReactDOM.render(<DateTimeDisplay key='something-unique' defValue='' />, div)
+    })
+    ReactDOM.unmountComponentAtNode(div)
+  })
+})

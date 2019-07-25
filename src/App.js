@@ -1,32 +1,32 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import { withStyles } from '@material-ui/core/styles'
+import Drawer from '@material-ui/core/Drawer'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import List from '@material-ui/core/List'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 
-import { getObjectList } from "./PacificaAPI";
-import DynamicTable from "./Table";
+import { getObjectList } from './PacificaAPI'
+import DynamicTable from './Table'
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: 'flex'
   },
   appBar: {
-    transition: theme.transitions.create(["margin", "width"], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
@@ -34,7 +34,7 @@ const styles = theme => ({
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    transition: theme.transitions.create(["margin", "width"], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     })
@@ -44,7 +44,7 @@ const styles = theme => ({
     marginRight: 20
   },
   hide: {
-    display: "none"
+    display: 'none'
   },
   drawer: {
     width: drawerWidth,
@@ -54,60 +54,64 @@ const styles = theme => ({
     width: drawerWidth
   },
   drawerHeader: {
-    display: "flex",
-    alignItems: "center",
-    padding: "0 8px",
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
     ...theme.mixins.toolbar,
-    justifyContent: "flex-end"
+    justifyContent: 'flex-end'
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    transition: theme.transitions.create("margin", {
+    transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
     marginLeft: -drawerWidth
   },
   contentShift: {
-    transition: theme.transitions.create("margin", {
+    transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 0
   }
-});
+})
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       open: false,
-      object_list: ["users"],
-      selected_object: "users"
-    };
+      objectList: ['users'],
+      selectedObject: 'users'
+    }
+    this.dynamicTableElement = React.createRef()
+    this.handleDrawerOpen = this.handleDrawerOpen.bind(this)
   }
 
-  selectObject = text => {
-    this.setState({ selected_object: text });
-  };
+  selectObject (text) {
+    // eslint-disable-next-line no-console
+    this.dynamicTableElement.current.updateData(text).catch(err => console.log(err))
+    this.setState({ selectedObject: text })
+  }
 
-  handleDrawerOpen = () => {
-    getObjectList("/mdapi").then(res => {
+  handleDrawerOpen () {
+    getObjectList(this.props.MDUrl).then(res => {
       this.setState({
         open: true,
-        object_list: res.data.available_objects
-      });
-    });
-  };
+        objectList: res.data.available_objects
+      })
+    }).catch(res => { this.setState({ open: false }) })
+  }
 
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
+  handleDrawerClose () {
+    this.setState({ open: false })
+  }
 
-  render() {
-    const { classes, theme } = this.props;
-    const { open, object_list, selected_object } = this.state;
+  render () {
+    const { classes, theme, MDUrl } = this.props
+    const { open, objectList, selectedObject } = this.state
 
     return (
       <div className={classes.root}>
@@ -123,12 +127,12 @@ class App extends React.Component {
               id="header-open-drawer"
               color="inherit"
               aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
+              onClick={() => { this.handleDrawerOpen() }}
               className={classNames(classes.menuButton, open && classes.hide)}
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
+            <Typography variant="h6" color="inherit" noWrap id='title-text'>
               Pacifica Metadata Management
             </Typography>
           </Toolbar>
@@ -143,8 +147,8 @@ class App extends React.Component {
           }}
         >
           <div className={classes.drawerHeader}>
-            <IconButton onClick={this.handleDrawerClose}>
-              {theme.direction === "ltr" ? (
+            <IconButton onClick={this.handleDrawerClose.bind(this)}>
+              {theme.direction === 'ltr' ? (
                 <ChevronLeftIcon />
               ) : (
                 <ChevronRightIcon />
@@ -153,20 +157,20 @@ class App extends React.Component {
           </div>
           <Divider />
           <List>
-            {Object.entries(object_list)
-              .sort()
-              .map((items, index) => (
+            {Object.entries(objectList).sort().map((items, index) => {
+              return (
                 <ListItem
-                  id={`listitem-${items[0]}`}
+                  id={`listitem-${items[0].replace('_', '-')}`}
                   button
                   key={items[0]}
                   onClick={() => {
-                    this.selectObject(items[0]);
+                    this.selectObject(items[0])
                   }}
                 >
                   <ListItemText primary={items[1]} />
                 </ListItem>
-              ))}
+              )
+            })}
           </List>
         </Drawer>
         <main
@@ -175,16 +179,17 @@ class App extends React.Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          <DynamicTable object={selected_object} md_url="/mdapi" />
+          <DynamicTable ref={this.dynamicTableElement} object={selectedObject} MDUrl={MDUrl} />
         </main>
       </div>
-    );
+    )
   }
 }
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
-};
+  theme: PropTypes.object.isRequired,
+  MDUrl: PropTypes.string.isRequired
+}
 
-export default withStyles(styles, { withTheme: true })(App);
+export default withStyles(styles, { withTheme: true })(App)
