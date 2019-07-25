@@ -76,9 +76,9 @@ module.exports = {
     for (let i = 0; i < objList.length; i++) {
       let obj = dataExamples[objList[i]]
       browser.pause(200)
-      browser.waitForElementPresent(`div[id=listitem-${objList[i].replace('_', '-')}]`)
-      browser.click(`div[id=listitem-${objList[i].replace('_', '-')}`)
-      browser.pause(200)
+      browser.waitForElementPresent(`div[id=listitem-${objList[i].replace(/_/g, '-')}]`)
+      browser.click(`div[id=listitem-${objList[i].replace(/_/g, '-')}]`)
+      browser.pause(300)
       browser.assert.containsText('#root', obj[dataColumns[objList[i]]])
     }
     browser.waitForElementPresent('button[id=drawer-close-drawer]')
