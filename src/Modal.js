@@ -260,7 +260,7 @@ class SimpleModal extends React.Component {
         <IconButton
           color="inherit"
           aria-label={`Open ${this.props.title}`}
-          id={`modal-button-${this.props.title.toLowerCase()}`}
+          id={`modal-button-${this.props.title.replace(/ /g, '-').toLowerCase()}`}
           onClick={this.handleOpen}
         >
           {icon()}

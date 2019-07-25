@@ -68,7 +68,7 @@ export const convertColumns = (
             <Grid container spacing={8}>
               <Grid item xs={8} sm={4} key="edit-modal">
                 <SimpleModal
-                  title="Edit"
+                  title={`Edit Row ${row.row._index}`}
                   MDUrl={MDUrl}
                   object={object}
                   defaults={row.row}
@@ -79,7 +79,8 @@ export const convertColumns = (
               <Grid item xs={8} sm={4} key="delete-button">
                 <IconButton
                   color="inherit"
-                  aria-label="Delete item"
+                  aria-label={`Delete Row ${row.row._index}`}
+                  id={`modal-button-delete-row-${row.row._index}`}
                   onClick={() => {
                     confirmAlert({
                       title: 'Confirm to Delete',
