@@ -1,22 +1,19 @@
 language: node_js
 dist: xenial
-services:
-- postgresql
-- xvfb
-addons:
-  chrome: stable
-  firefox: latest
-  apt:
-    packages:
-      - nginx
 node_js:
 - "10"
 cache: npm
 env:
-  PEEWEE_URL: postgres://postgres:@localhost/pacifica_metadata
-  NOTIFICATIONS_DISABLED: true
-  MOZ_HEADLESS: 1
-before_script:
+  global:
+    - PEEWEE_URL=postgres://postgres:@localhost/pacifica_metadata
+    - NOTIFICATIONS_DISABLED=true
+    - MOZ_HEADLESS=1
+stages:
+ - eslint
+ - test
+ - e2e
+ - deploy
+".before_script": &1
 - psql -c 'create database pacifica_metadata;' -U postgres
 - export METADATA_CPCONFIG="$PWD/travis/server.conf"
 - source ~/virtualenv/python3.6/bin/activate
@@ -45,11 +42,38 @@ before_script:
   npm run e2e-selenium-install
   npm run e2e-nginx-conf
   npm run e2e-selenium-start &
-  npm run e2e-nginx-start &
-script:
- - npm run eslint
- - npm run test
- - npm run build
- - npm run start &
- - npm run e2e-firefox
- - npm run e2e-chrome
+  test -e /usr/sbin/nginx && npm run e2e-nginx-start &
+  npm run start &
+".services_e2e": &2
+- postgresql
+- xvfb
+".addons_e2e": &3
+  chrome: stable
+  firefox: latest
+  apt:
+    packages:
+      - nginx
+
+
+jobs:
+  include:
+    - stage: eslint
+      script: npm run eslint
+    - stage: test
+      services: *2
+      before_script: *1
+      script: npm run test 
+    - stage: test
+      services: *2
+      before_script: *1
+      script: npm run build
+    - stage: e2e
+      services: *2
+      addons: *3
+      before_script: *1
+      script: sleep 20 && npm run e2e-chrome
+    - stage: e2e
+      services: *2
+      addons: *3
+      before_script: *1
+      script: sleep 20 && npm run e2e-firefox
