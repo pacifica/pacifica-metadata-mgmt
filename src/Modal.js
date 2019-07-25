@@ -67,7 +67,7 @@ class SimpleModal extends React.Component {
                         label={key}
                         type="datetime-local"
                         defaultValue={defaults[key]}
-                        id={`modal-input-${key}`}
+                        id={`modal-input-${key.replace(/_/g, '-')}`}
                         onChange={event => {
                           this.updateFormInput(key, event.target.value)
                         }}
@@ -82,7 +82,7 @@ class SimpleModal extends React.Component {
                     <TextField
                       InputLabelProps={{ shrink: true }}
                       label={key}
-                      id={`modal-input-${key}`}
+                      id={`modal-input-${key.replace(/_/g, '-')}`}
                       type="date-local"
                       defaultValue={defaults[key]}
                       onChange={event => {
@@ -99,11 +99,11 @@ class SimpleModal extends React.Component {
                   actualKey = `_${key}`
                 }
                 fieldDef = (
-                  <Grid item xs={12} sm={6} key={key}>
+                  <Grid item xs={12} sm={6} key={key.replace(/_/g, '-')}>
                     <TextField
                       InputLabelProps={{ shrink: true }}
                       label={key}
-                      id={`modal-input-${key}`}
+                      id={`modal-input-${key.replace(/_/g, '-')}`}
                       defaultValue={defaults[actualKey]}
                       multiline={fieldTypes[key] === 'TEXT'}
                       onChange={event => {
@@ -119,7 +119,7 @@ class SimpleModal extends React.Component {
                     <TextField
                       InputLabelProps={{ shrink: true }}
                       label={key}
-                      id={`modal-input-${key}`}
+                      id={`modal-input-${key.replace(/_/g, '-')}`}
                       defaultValue={defaults[key]}
                       onChange={event => {
                         this.updateFormInput(key, event.target.value)
@@ -135,7 +135,7 @@ class SimpleModal extends React.Component {
                     <TextField
                       type="number"
                       label={key}
-                      id={`modal-input-${key}`}
+                      id={`modal-input-${key.replace(/_/g, '-')}`}
                       defaultValue={defaults[key]}
                       InputLabelProps={{ shrink: true }}
                       onChange={event => {
@@ -151,7 +151,7 @@ class SimpleModal extends React.Component {
                     <Typography>{key}</Typography>
                     <Checkbox
                       label={key}
-                      id={`modal-input-${key}`}
+                      id={`modal-input-${key.replace(/_/g, '-')}`}
                       value={key}
                       defaultChecked={this.state.formData[key]}
                       onChange={event => {
@@ -166,7 +166,7 @@ class SimpleModal extends React.Component {
                   <Grid item xs={12} sm={6} key={key}>
                     <TextField
                       label={key}
-                      id={`modal-input-${key}`}
+                      id={`modal-input-${key.replace(/_/g, '-')}`}
                       defaultValue={defaults[`_${key}`]}
                       InputLabelProps={{ shrink: true }}
                       onChange={event => {
