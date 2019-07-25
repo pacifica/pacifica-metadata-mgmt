@@ -147,7 +147,7 @@ class App extends React.Component {
           }}
         >
           <div className={classes.drawerHeader}>
-            <IconButton onClick={this.handleDrawerClose.bind(this)}>
+            <IconButton onClick={this.handleDrawerClose.bind(this)} id="drawer-close-drawer">
               {theme.direction === 'ltr' ? (
                 <ChevronLeftIcon />
               ) : (
