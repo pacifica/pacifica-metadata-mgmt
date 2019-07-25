@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import DynamicTable from './Table'
-import { act, wait } from 'react-testing-library'
+import { act, wait } from '@testing-library/react'
 
 describe("<DynamicTable /> renders", function() {
   it('renders without crashing', async function () {

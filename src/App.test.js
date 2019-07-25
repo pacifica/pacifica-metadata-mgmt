@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import { act, wait } from 'react-testing-library'
+import { act, wait } from '@testing-library/react'
 
 describe('<App />', function() {
   it('renders without crashing', async function () {

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import DateTimeDisplay from './DateTime'
-import { act } from 'react-testing-library'
+import { act } from '@testing-library/react'
 
 describe('<DateTimeDisplay />', function() {
   it('renders without crashing', function() {

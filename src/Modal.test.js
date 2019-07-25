@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import EditIcon from '@material-ui/icons/Edit'
 import SimpleModal from './Modal'
-import { act } from 'react-testing-library'
+import { act } from '@testing-library/react'
 
 describe('<SimpleModal />', function() {
   it('renders without crashing', function() {
