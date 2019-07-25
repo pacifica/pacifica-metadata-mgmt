@@ -7,7 +7,7 @@ describe('<ErrorBoundry />', function() {
   it('renders without crashing', function() {
     const div = document.createElement('div')
     act(() => {
-      ReactDOM.render(<ErrorBoundry key='something-unique' />, div)
+      ReactDOM.render(<ErrorBoundry key='something-unique'><div /></ErrorBoundry>, div)
     })
     ReactDOM.unmountComponentAtNode(div)
   })
