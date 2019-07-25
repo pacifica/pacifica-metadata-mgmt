@@ -49,4 +49,6 @@ before_script:
 script:
  - npm run eslint
  - npm run test
+ - npm run build
+ - npm run start &
  - npm run e2e-firefox
