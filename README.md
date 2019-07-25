@@ -39,15 +39,70 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## End-to-End Testing
 
-```
-npm run e2e-setup
-node ./node_modules/.bin/selenium-standalone start &
-docker run -it --rm -e POSTGRES_PASSWORD=metadata -e POSTGRES_DB=pacifica_metadata -e POSTGRES_USER=pacifica -p 5432:5432 -d postgres:latest
-pacifica-metadata-cmd dbsync
-uwsgi --http-socket :8121 --module pacifica.metadata.wsgi
-loadit_test.py
-npm run e2e-chrome
-```
+### Development Environment Requirements
+
+You should have the following available installed and available in your path.
+
+ - node (>=10.16.0)
+ - nginx
+ - docker-ce
+ - firefox
+ - chrome
+ - edge (windows only)
+
+### Procedure for Setup
+
+There are many services you need started and available for the
+end-to-end testing to communicate correctly. If the following
+commands do not give you your prompt back open up another shell.
+You will have about six running processes if you are successful. 
+
+#### Start Pacifica Metadata Service
+
+The `npm` scripts run the Pacifica Metadata service through docker.
+However, if you do not want to run docker you just need to have port
+`8121` available on `localhost` to be listening with the Metadata
+service.
+
+ - Start the database `npm run e2e-metadb-start`
+ - Start the service `npm run e2e-metadataserver-start`
+ - Load the test data `npm run e2e-metadataserver-load`
+
+#### Start Selenium Service
+
+The `npm` scripts run the Selenium service locally though the node
+package `selenium-standalone`. However, if you do not want to run
+locally you need to have port `4444` available on `localhost` to be
+a valid selenium server.
+
+ - Install Selenium standalone `npm run e2e-selenium-install`
+ - Start Selenium `npm run e2e-selenium-start`
+
+#### Start Node Development Server
+
+The standard approach to running the node development server applies.
+
+ - Run Node `npm run start`
+
+#### Start NGINX Server
+
+The `npm` scripts to configure and start nginx are provided. This
+service is required for the service to contact the metadata service
+API. Check the configuration file before you start and verify file
+paths exist that are referenced in the config.
+
+ - Configure NGINX `npm run e2e-nginx-conf`
+ - NOTE: Check the `travis/nginx.conf` and verify file paths
+ - Start NGINX `npm run e2e-nginx-start`
+
+#### Run the End-to-End Test
+
+The `npm` scripts run selenium with `nightwatch` see that node
+package for more details.
+
+ - Run Tests `npm run e2e-firefox`
+ - Run Tests `npm run e2e-chrome`
+ - Run Tests `npm run e2e-edge`
 
 ## Learn More
 

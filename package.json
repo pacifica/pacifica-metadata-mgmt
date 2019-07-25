@@ -1,6 +1,6 @@
 {
   "name": "pacifica-mgmt",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.3",
@@ -35,7 +35,7 @@
     "e2e-selenium-start": "selenium-standalone start",
     "e2e-selenium-stop": "selenium-standalone stop",
     "eject": "react-scripts eject",
-    "release": "release-it"
+    "release": "node node_modules/release-it/bin/release-it.js"
   },
   "eslintConfig": {
     "extends": "react-app"
