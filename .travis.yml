@@ -52,3 +52,4 @@ script:
  - npm run build
  - npm run start &
  - npm run e2e-firefox
+ - npm run e2e-chrome
