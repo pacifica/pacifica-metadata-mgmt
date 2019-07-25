@@ -11,7 +11,7 @@ module.exports = {
         browser.click('button[id=modal-button-create]')
         browser.waitForElementPresent('input[id=modal-input-key]')
         browser.setValue('input[id=modal-input-key]', 'some_new_key')
-        browser.setValue('input[id=modal-input-display_name]', 'Some New Key')
+        browser.setValue('input[id=modal-input-display-name]', 'Some New Key')
         browser.click('button[id=modal-button-save]')
         browser.click('button[id=modal-button-close]')
         browser.pause(200)
