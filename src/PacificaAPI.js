@@ -5,6 +5,8 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
 import Checkbox from '@material-ui/core/Checkbox'
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import DateTimeDisplay from './DateTime'
 import SimpleModal from './Modal'
 
@@ -79,19 +81,31 @@ export const convertColumns = (
                   color="inherit"
                   aria-label="Delete item"
                   onClick={() => {
-                    Axios.delete(`${MDUrl}/${object}`, {
-                      params: deleteArgs
+                    confirmAlert({
+                      title: 'Confirm to Delete',
+                      message: `Are you sure you want to delete? ${JSON.stringify(deleteArgs)}`,
+                      buttons: [
+                        {
+                          label: 'Yes',
+                          onClick: () => {
+                            Axios.delete(`${MDUrl}/${object}`, {
+                              params: deleteArgs
+                            }).then(res => {
+                              // eslint-disable-next-line no-console
+                              console.log(res)
+                              updateFunc()
+                            }).catch(res => {
+                              // eslint-disable-next-line no-console
+                              console.log(JSON.stringify(res, null, 2))
+                              alert(res.response.data.traceback)
+                            })
+                          }
+                        }, {
+                          label: 'No',
+                          onClick: () => null
+                        }
+                      ]
                     })
-                      .then(res => {
-                        // eslint-disable-next-line no-console
-                        console.log(res)
-                        updateFunc()
-                      })
-                      .catch(res => {
-                        // eslint-disable-next-line no-console
-                        console.log(JSON.stringify(res, null, 2))
-                        alert(res.response.data.traceback)
-                      })
                   }}
                 >
                   <DeleteIcon />
