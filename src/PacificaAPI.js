@@ -14,14 +14,14 @@ export const getObjectList = MDUrl => {
   return Axios.get(`${MDUrl}/objectinfo/list`)
 }
 
-export const filteredWhereArgs = (fieldList, filtered) => {
+export const filteredWhereArgs = (fieldTypes, filtered) => {
   let whereArgs = {}
   for (let i = 0; i < filtered.length; i++) {
     if (filtered[i].id === '_id') {
       whereArgs._id = filtered[i].value
       return whereArgs
     }
-    switch (fieldList[filtered[i].id]) {
+    switch (fieldTypes[filtered[i].id]) {
       case 'TEXT':
       case 'VARCHAR':
         filtered[i].disableLike = false
@@ -154,7 +154,7 @@ export const getData = (
 ) => {
   return new Promise((resolve, reject) => {
     Axios.get(`${MDUrl}/objectinfo/${object}`).then(res => {
-      let whereArgs = filteredWhereArgs(res.data.field_list, filtered)
+      let whereArgs = filteredWhereArgs(res.data.field_types, filtered)
       Axios.get(`${MDUrl}/objectinfo/${object}`, { params: whereArgs }).then(res => {
         let recordCount = res.data.record_count
         let columns = convertColumns(
