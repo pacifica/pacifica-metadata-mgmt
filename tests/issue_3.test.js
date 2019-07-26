@@ -35,7 +35,8 @@ module.exports = {
         browser.click('button[id=modal-button-save]')
         browser.pause(200)
         // Verify the User Group entry is in the table
-        browser.expect.element('div.rt-tr-group')[1].text.to.contain('10').to.contain('1000');
+        browser.expect.element('div.rt-tr-group:nth-child(2)').text.to.contain('10')
+        browser.expect.element('div.rt-tr-group:nth-child(2)').text.to.contain('1000')
         // Delete the entry we just put in
         browser.click('button[id=modal-button-delete-row-1]')
         browser.pause(100)
