@@ -160,7 +160,7 @@ class App extends React.Component {
             {Object.entries(objectList).sort().map((items, index) => {
               return (
                 <ListItem
-                  id={`listitem-${items[0].replace('_', '-')}`}
+                  id={`listitem-${items[0].replace(/_/g, '-')}`}
                   button
                   key={items[0]}
                   onClick={() => {
