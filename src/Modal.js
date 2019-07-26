@@ -236,6 +236,7 @@ class SimpleModal extends React.Component {
     }).then(res => {
       // eslint-disable-next-line no-console
       console.log(res)
+      this.handleClose()
     }).catch(res => {
       // eslint-disable-next-line no-console
       console.log(JSON.stringify(res, null, 2))

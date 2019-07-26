@@ -19,8 +19,6 @@ module.exports = {
         browser.setValue('input[id=modal-input-key]', 'some_new_key')
         browser.setValue('input[id=modal-input-display-name]', 'Some New Key')
         browser.click('button[id=modal-button-save]')
-        browser.pause(100)
-        browser.click('button[id=modal-button-close]')
         browser.pause(200)
         browser.expect.element('#root').text.to.contain('Some New Key');
         browser.expect.element('#root').text.to.contain('some_new_key');
