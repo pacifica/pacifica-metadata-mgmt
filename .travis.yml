@@ -18,9 +18,9 @@ stages:
 - export METADATA_CPCONFIG="$PWD/travis/server.conf"
 - source ~/virtualenv/python3.6/bin/activate
 - pip install --upgrade setuptools wheel pip
-- pip install pacifica-metadata
+- pip install pacifica-metadata uwsgi
 - pacifica-metadata-cmd dbsync
-- python -m pacifica.metadata & echo $! > metadata.pid
+- uwsgi --http-socket :8121 --module pacifica.metadata.wsgi & echo $! > metadata.pid
 - |
   MAX_TRIES=60
   HTTP_CODE=$(curl -sL -w "%{http_code}\\n" localhost:8121/keys -o /dev/null || true)
