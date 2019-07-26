@@ -39,9 +39,9 @@ module.exports = {
         browser.click('button[id=modal-button-save]')
         browser.pause(200)
         // Verify the Project Instrument entry is in the table
-        browser.expect.element('div.rt-tr-group:nth-child(3)').text.to.contain('1235')
-        browser.expect.element('div.rt-tr-group:nth-child(3)').text.to.contain('104')
-        browser.expect.element('div.rt-tr-group:nth-child(3)').text.to.contain('69fb126a-a97a-4709-b9ce-58b3f84bdcb7')
+        browser.expect.element('#root').text.to.contain('1235')
+        browser.expect.element('#root').text.to.contain('104')
+        browser.expect.element('#root').text.to.contain('69fb126a-a97a-4709-b9ce-58b3f84bdcb7')
         // Delete the entry we just put in
         browser.click('button[id=modal-button-delete-row-2]')
         browser.pause(100)
