@@ -5,10 +5,9 @@
     },
     "extends": [
         "standard",
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:mocha/recommended",
-        "plugin:jest/recommended"
+        "eslint:all",
+        "plugin:react/all",
+        "plugin:jest/all"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -21,11 +20,21 @@
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
+    "parser": "babel-eslint",
     "plugins": [
         "react",
-        "jest",
-        "mocha"
+        "babel",
+        "jest"
     ],
     "rules": {
+        "react/jsx-indent": "off",
+        "react/jsx-indent-props": "off",
+        "react/jsx-max-depth": "off",
+        "max-len": ["error", { "code": 120 }]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }
