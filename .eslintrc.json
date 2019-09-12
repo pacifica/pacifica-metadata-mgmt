@@ -30,6 +30,8 @@
         "react/jsx-indent": "off",
         "react/jsx-indent-props": "off",
         "react/jsx-max-depth": "off",
+        "react/no-set-state": "off",
+        "jest/valid-expect-in-promise": "off",
         "max-len": ["error", { "code": 120 }]
     },
     "settings": {
