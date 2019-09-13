@@ -1,18 +1,23 @@
 language: node_js
+
 dist: xenial
+
 node_js:
 - "10"
+
 cache: npm
+
 env:
   global:
     - PEEWEE_URL=postgres://postgres:@localhost/pacifica_metadata
     - NOTIFICATIONS_DISABLED=true
     - MOZ_HEADLESS=1
+
 stages:
- - eslint
- - test
- - e2e
- - deploy
+  - Lint
+  - Test
+  - End-to-end
+
 ".before_script": &1
 - psql -c 'create database pacifica_metadata;' -U postgres
 - export METADATA_CPCONFIG="$PWD/travis/server.conf"
@@ -44,9 +49,11 @@ stages:
   npm run e2e-selenium-start &
   test -e /usr/sbin/nginx && npm run e2e-nginx-start &
   npm run start &
+
 ".services_e2e": &2
 - postgresql
 - xvfb
+
 ".addons_e2e": &3
   chrome: stable
   firefox: latest
@@ -54,25 +61,29 @@ stages:
     packages:
       - nginx
 
-
 jobs:
   include:
-    - stage: eslint
+    - stage: Lint
+      name: "eslint"
       script: npm run eslint
-    - stage: test
+    - stage: Test
+      name: "npm run test"
       services: *2
       before_script: *1
-      script: npm run test 
-    - stage: test
+      script: npm run test
+    - stage: Test
+      name: "npm run build"
       services: *2
       before_script: *1
       script: npm run build
-    - stage: e2e
+    - stage: End-to-end
+      name: "Chrome Testing"
       services: *2
       addons: *3
       before_script: *1
       script: sleep 20 && npm run e2e-chrome
-    - stage: e2e
+    - stage: End-to-end
+      name: "Firefox Testing"
       services: *2
       addons: *3
       before_script: *1
