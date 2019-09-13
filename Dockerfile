@@ -6,6 +6,7 @@ WORKDIR /usr/src/pacifica-metadata-mgmt
 ENV PATH /usr/src/pacifica-metadata-mgmt/node_modules/.bin:$PATH
 # copy project file
 COPY package.json .
+COPY package-lock.json .
 
 #
 # ---- Dependencies ----
