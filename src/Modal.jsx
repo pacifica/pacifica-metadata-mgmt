@@ -246,7 +246,7 @@ class SimpleModal extends React.Component {
     const { primaryKeys, formData } = this.state
     let method = Axios.put
     const params = {}
-    if (title === 'Edit') {
+    if (title.includes('Edit')) {
       method = Axios.post
       primaryKeys.map((key) => {
         let actualKey = key
