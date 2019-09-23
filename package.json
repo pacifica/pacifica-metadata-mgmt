@@ -31,8 +31,8 @@
     "e2e-chrome": "nightwatch -e chrome",
     "e2e-firefox": "nightwatch -e default",
     "e2e-edge": "nightwatch -e edge",
-    "e2e-selenium-install": "selenium-standalone install",
-    "e2e-selenium-start": "selenium-standalone start",
+    "e2e-selenium-install": "selenium-standalone install --version=3.141.59",
+    "e2e-selenium-start": "selenium-standalone start --version=3.141.59",
     "e2e-selenium-stop": "selenium-standalone stop",
     "eject": "react-scripts eject",
     "release": "node node_modules/release-it/bin/release-it.js"
