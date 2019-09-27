@@ -18,31 +18,11 @@ stages:
   - Test
   - End-to-end
 
-".before_script": &1
-- psql -c 'create database pacifica_metadata;' -U postgres
-- export METADATA_CPCONFIG="$PWD/travis/server.conf"
-- source ~/virtualenv/python3.6/bin/activate
-- pip install --upgrade setuptools wheel pip
-- pip install pacifica-metadata uwsgi
-- pacifica-metadata-cmd dbsync
-- uwsgi --http-socket :8121 --module pacifica.metadata.wsgi & echo $! > metadata.pid
-- |
-  MAX_TRIES=60
-  HTTP_CODE=$(curl -sL -w "%{http_code}\\n" localhost:8121/keys -o /dev/null || true)
-  while [[ $HTTP_CODE != 200 && $MAX_TRIES > 0 ]] ; do
-    sleep 1
-    HTTP_CODE=$(curl -sL -w "%{http_code}\\n" localhost:8121/keys -o /dev/null || true)
-    MAX_TRIES=$(( MAX_TRIES - 1 ))
-  done
-- |
-  TOP_DIR=$PWD
-  MD_TEMP=$(mktemp -d)
-  VERSION=$(pip show pacifica-metadata | grep Version: | awk '{ print $2 }')
-  git clone https://github.com/pacifica/pacifica-metadata.git ${MD_TEMP}
-  pushd ${MD_TEMP}
-  git checkout v${VERSION}
-  python tests/test_files/loadit_test.py
-  popd
+before_script:
+- source /home/travis/virtualenv/python3.6/bin/activate
+- pip install ansible
+- ansible-galaxy install pacifica.ansible_pacifica pacifica.ansible_travis
+- ansible-playbook ~/.ansible/roles/pacifica.ansible_travis/molecule/common/playbook.yml -i ~/.ansible/roles/pacifica.ansible_travis/molecule/common/inventory.yml -e "ansible_python_interpreter=/home/travis/virtualenv/python3.6/bin/python travis_virtualenv=python3.6 github_repository=metadata-mgmt"
 - |
   npm run e2e-selenium-install
   npm run e2e-nginx-conf
@@ -50,11 +30,11 @@ stages:
   test -e /usr/sbin/nginx && npm run e2e-nginx-start &
   npm run start &
 
-".services_e2e": &2
+services:
 - postgresql
 - xvfb
 
-".addons_e2e": &3
+addons:
   chrome: stable
   firefox: latest
   apt:
@@ -65,26 +45,19 @@ jobs:
   include:
     - stage: Lint
       name: "eslint"
+      services: []
+      addons: []
+      before_script: skip
       script: npm run eslint
     - stage: Test
       name: "npm run test"
-      services: *2
-      before_script: *1
       script: npm run test
     - stage: Test
       name: "npm run build"
-      services: *2
-      before_script: *1
       script: npm run build
     - stage: End-to-end
       name: "Chrome Testing"
-      services: *2
-      addons: *3
-      before_script: *1
       script: sleep 20 && npm run e2e-chrome
     - stage: End-to-end
       name: "Firefox Testing"
-      services: *2
-      addons: *3
-      before_script: *1
       script: sleep 20 && npm run e2e-firefox
