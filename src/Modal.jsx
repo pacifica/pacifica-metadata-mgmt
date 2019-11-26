@@ -189,7 +189,7 @@ class SimpleModal extends React.Component {
               case 'DATETIME':
                 return this.fieldDefDatetime(key, 'datetime')
               case 'DATE':
-                return this.fieldDefDate(key, 'date')
+                return this.fieldDefDatetime(key, 'date')
               case 'VARCHAR':
               case 'TEXT':
                 if (primaryKeys.includes(key)) {
