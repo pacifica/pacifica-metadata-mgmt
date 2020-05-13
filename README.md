@@ -138,3 +138,11 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### `npm run release`
+
+This is an example of how to release a build with Changelog additions. Perform this from the Pacifica clone of the repository not a fork.
+
+```
+npm run release --increment=patch --non-interactive
+```
