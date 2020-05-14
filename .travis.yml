@@ -30,6 +30,7 @@ before_script:
   npm run e2e-selenium-start &
   test -e /usr/sbin/nginx && npm run e2e-nginx-start &
   sleep 20
+- netstat -tulpn | grep LISTEN
 
 services:
 - postgresql
