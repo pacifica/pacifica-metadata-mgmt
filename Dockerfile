@@ -1,5 +1,5 @@
 # ---- Base Node ----
-FROM node:10-stretch AS base
+FROM node:12-stretch AS base
 # set working directory
 WORKDIR /usr/src/pacifica-metadata-mgmt
 # Set running user PATH
