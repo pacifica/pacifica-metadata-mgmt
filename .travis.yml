@@ -24,11 +24,12 @@ before_script:
 - ansible-galaxy install pacifica.ansible_pacifica pacifica.ansible_travis
 - ansible-playbook ~/.ansible/roles/pacifica.ansible_travis/molecule/common/playbook.yml -i ~/.ansible/roles/pacifica.ansible_travis/molecule/common/inventory.yml -e "ansible_python_interpreter=/home/travis/virtualenv/python3.6/bin/python travis_virtualenv=python3.6 github_repository=metadata-mgmt"
 - |
+  npm run start &
   npm run e2e-selenium-install
   npm run e2e-nginx-conf
   npm run e2e-selenium-start &
   test -e /usr/sbin/nginx && npm run e2e-nginx-start &
-  npm run start &
+  sleep 20
 
 services:
 - postgresql
