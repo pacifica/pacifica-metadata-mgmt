@@ -18,13 +18,12 @@ install: npm install
 
 before_script:
   - sudo service nginx stop
-  - netstat -tulpn | grep LISTEN
   - source /home/travis/virtualenv/python3.6/bin/activate
   - pip install ansible
   - ansible-galaxy install pacifica.ansible_pacifica pacifica.ansible_travis
   - ansible-playbook ~/.ansible/roles/pacifica.ansible_travis/molecule/common/playbook.yml -i ~/.ansible/roles/pacifica.ansible_travis/molecule/common/inventory.yml -e "ansible_python_interpreter=/home/travis/virtualenv/python3.6/bin/python travis_virtualenv=python3.6 github_repository=metadata-mgmt"
   - |
-    npm run start &
+    npm run build &
     npm run e2e-selenium-install
     npm run e2e-nginx-conf
     npm run e2e-selenium-start &
@@ -35,8 +34,6 @@ before_script:
   - ./wait-for-it 127.0.0.1:8121
   - ./wait-for-it 127.0.0.1:8181
   - ./wait-for-it 127.0.0.1:8080
-  - ./wait-for-it -t 30 127.0.0.1:3000
-  - netstat -tulpn | grep LISTEN
 
 services:
   - postgresql
