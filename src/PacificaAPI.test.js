@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import { getData, getObjectList } from './PacificaAPI'
 
 describe(

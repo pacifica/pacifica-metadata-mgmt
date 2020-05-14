@@ -10,8 +10,10 @@ const styles = function styles (theme) {
       flexWrap: 'wrap'
     },
     textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
+      // eslint-disable-next-line no-magic-numbers
+      marginLeft: theme.spacing(1),
+      // eslint-disable-next-line no-magic-numbers
+      marginRight: theme.spacing(1),
       width: 200
     }
   })

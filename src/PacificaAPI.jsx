@@ -3,7 +3,6 @@ import Axios from 'axios'
 import Checkbox from '@material-ui/core/Checkbox'
 import DateTimeDisplay from './DateTime'
 import DeleteModal from './DeleteModal'
-import EditIcon from '@material-ui/icons/Edit'
 import Grid from '@material-ui/core/Grid'
 import React from 'react'
 import SimpleModal from './Modal'
@@ -68,7 +67,6 @@ const headerColumnButtons = function headerColumnButtons (MDUrl, object, primary
             MDUrl={MDUrl}
             closeUpdate={updateFunc}
             defaults={row.row}
-            icon={EditIcon}
             object={object}
             title={`Edit Row ${rowIndex}`}
           />

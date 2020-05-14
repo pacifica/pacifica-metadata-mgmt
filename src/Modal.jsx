@@ -2,6 +2,7 @@
 import Axios from 'axios'
 import Checkbox from '@material-ui/core/Checkbox'
 import CloseIcon from '@material-ui/icons/Close'
+import EditIcon from '@material-ui/icons/Edit'
 import FormControl from '@material-ui/core/FormControl'
 import Grid from '@material-ui/core/Grid'
 import IconButton from '@material-ui/core/IconButton'
@@ -24,10 +25,10 @@ const styles = function styles (theme) {
       boxShadow: theme.shadows[5],
       outline: 'none',
       // eslint-disable-next-line no-magic-numbers
-      padding: theme.spacing.unit * 4,
+      padding: theme.spacing(4),
       position: 'absolute',
       // eslint-disable-next-line no-magic-numbers
-      width: theme.spacing.unit * 100
+      width: theme.spacing(100)
     }
   })
 }
@@ -41,7 +42,6 @@ class SimpleModal extends React.Component {
     closeUpdate: PropTypes.func,
     // eslint-disable-next-line react/forbid-prop-types
     defaults: PropTypes.object,
-    icon: PropTypes.func.isRequired,
     object: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired
   }
@@ -98,9 +98,9 @@ class SimpleModal extends React.Component {
           InputLabelProps={{ shrink: true }}
           defaultValue={formData[key]}
           id={`modal-input-${key.replace(
-/_/gu,
-'-'
-)}`}
+            /_/gu,
+            '-'
+          )}`}
           key={key}
           label={key}
           // eslint-disable-next-line react/jsx-no-bind
@@ -132,9 +132,9 @@ class SimpleModal extends React.Component {
           InputLabelProps={{ shrink: true }}
           defaultValue={formData[actualKey]}
           id={`modal-input-${key.replace(
-/_/gu,
-'-'
-)}`}
+            /_/gu,
+            '-'
+          )}`}
           label={key}
           // eslint-disable-next-line react/jsx-no-bind
           onChange={(event) => {
@@ -344,18 +344,18 @@ formData,
   }
 
   openButton () {
-    const { title, icon } = this.props
+    const { title } = this.props
     return (
       <IconButton
         aria-label={`Open ${title}`}
         color="inherit"
         id={`modal-button-${title.replace(
-/ /gu,
-'-'
-).toLowerCase()}`}
+          / /gu,
+          '-'
+        ).toLowerCase()}`}
         onClick={this.handleOpen}
       >
-        <icon />
+        <EditIcon />
       </IconButton>
 
     )

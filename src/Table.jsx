@@ -1,7 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import 'react-table/react-table.css'
 import React, { Component } from 'react'
-import EditIcon from '@material-ui/icons/Edit'
 import PropTypes from 'prop-types'
 import ReactTable from 'react-table'
 import SimpleModal from './Modal'
@@ -125,7 +124,6 @@ class DynamicTable extends Component {
           MDUrl={MDUrl}
           closeUpdate={this.updateDataObject}
           defaults={{}}
-          icon={EditIcon}
           object={object}
           title="Create"
         />

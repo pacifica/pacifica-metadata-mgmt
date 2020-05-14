@@ -18,10 +18,10 @@ const styles = function styles (theme) {
       boxShadow: theme.shadows[5],
       outline: 'none',
       // eslint-disable-next-line no-magic-numbers
-      padding: theme.spacing.unit * 4,
+      padding: theme.spacing(4),
       position: 'absolute',
       // eslint-disable-next-line no-magic-numbers
-      width: theme.spacing.unit * 100
+      width: theme.spacing(100)
     }
   })
 }

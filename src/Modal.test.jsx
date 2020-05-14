@@ -1,8 +1,6 @@
-import EditIcon from '@material-ui/icons/Edit'
+import { act, render } from '@testing-library/react'
 import React from 'react'
-import ReactDOM from 'react-dom'
 import SimpleModal from './Modal'
-import { act } from '@testing-library/react'
 
 describe(
   '<SimpleModal />',
@@ -12,24 +10,18 @@ describe(
       () => {
         // eslint-disable-next-line no-magic-numbers
         expect.assertions(1)
-        const div = document.createElement('div')
         act(() => {
-          expect(ReactDOM.render(
-            (
-              <SimpleModal
-                MDUrl="http://localhost:8121"
-                // eslint-disable-next-line react/jsx-no-bind
-                closeUpdate={() => 'On close update'}
-                defaults={{}}
-                // eslint-disable-next-line react/jsx-no-bind
-                icon={() => (<EditIcon />)}
-                object="keys"
-                title="Some Modal Title"
-              />
-            ), div
-          )).toBeInstanceOf(React.Component)
+          expect(render((
+            <SimpleModal
+              MDUrl="http://localhost:8121"
+              // eslint-disable-next-line react/jsx-no-bind
+              closeUpdate={() => 'On close update'}
+              defaults={{}}
+              object="keys"
+              title="Some Modal Title"
+            />
+          )).container.firstChild).toBeInstanceOf(HTMLDivElement)
         })
-        ReactDOM.unmountComponentAtNode(div)
       }
     )
   }

@@ -54,7 +54,7 @@ const styles = function styles (theme) {
       flexGrow: 1,
       marginLeft: -drawerWidth,
       // eslint-disable-next-line no-magic-numbers
-      padding: theme.spacing.unit * 3,
+      padding: theme.spacing(3),
       transition: theme.transitions.create(
         'margin',
         {
