@@ -32,7 +32,8 @@
         "react/jsx-max-depth": "off",
         "react/no-set-state": "off",
         "jest/valid-expect-in-promise": "off",
-        "max-len": ["error", { "code": 120 }]
+        "max-len": ["error", { "code": 120 }],
+        "react/prefer-stateless-function": "off"
     },
     "settings": {
         "react": {

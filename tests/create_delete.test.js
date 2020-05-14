@@ -18,9 +18,18 @@ module.exports = {
     browser.click('button[id=modal-button-create]')
     browser.pause(pauseTime)
     browser.waitForElementPresent('input[id=modal-input-id]')
-    browser.setValue('input[id=modal-input-id]', '1')
-    browser.setValue('input[id=modal-input-key]', 'some_new_key')
-    browser.setValue('input[id=modal-input-display-name]', 'Some New Key')
+    browser.setValue(
+      'input[id=modal-input-id]',
+      '1'
+    )
+    browser.setValue(
+      'input[id=modal-input-key]',
+      'some_new_key'
+    )
+    browser.setValue(
+      'input[id=modal-input-display-name]',
+      'Some New Key'
+    )
     browser.click('button[id=modal-button-save]')
     browser.pause(saveTime)
     browser.expect.element('#root').text.to.contain('Some New Key')

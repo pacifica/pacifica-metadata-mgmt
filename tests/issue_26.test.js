@@ -29,7 +29,10 @@ module.exports = {
     browser.waitForElementPresent('#root > div > main > div:nth-child(2) > div.ReactTable > div.rt-table > div.rt-thead.-filters > div > div:nth-child(6) > input[type=text]')
     // Enter a short string in the filter field for `project`
     browser.pause(pauseTime)
-    browser.sendKeys('#root > div > main > div:nth-child(2) > div.ReactTable > div.rt-table > div.rt-thead.-filters > div > div:nth-child(6) > input[type=text]', '1234')
+    browser.sendKeys(
+      '#root > div > main > div:nth-child(2) > div.ReactTable > div.rt-table > div.rt-thead.-filters > div > div:nth-child(6) > input[type=text]',
+      '1234'
+    )
     browser.pause(saveTime)
     // Verify the project 1234a is in the table
     browser.expect.element('#root').text.to.contain('1234a')

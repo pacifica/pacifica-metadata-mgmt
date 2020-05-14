@@ -3,7 +3,6 @@ import Axios from 'axios'
 import Checkbox from '@material-ui/core/Checkbox'
 import DateTimeDisplay from './DateTime'
 import DeleteModal from './DeleteModal'
-import EditIcon from '@material-ui/icons/Edit'
 import Grid from '@material-ui/core/Grid'
 import React from 'react'
 import SimpleModal from './Modal'
@@ -38,17 +37,11 @@ export const filteredWhereArgs = (fieldTypes, filtered) => {
   return whereArgs
 }
 
-const getEditIcon = function getEditIcon () {
-  return (
-    <EditIcon />
-  )
-}
-
 // eslint-disable-next-line max-params, max-lines-per-function
 const headerColumnButtons = function headerColumnButtons (MDUrl, object, primaryKeys, updateFunc) {
   // eslint-disable-next-line max-lines-per-function
   return function internalColumnButtons (row) {
-    const deleteArgs = { 'force': 'True' }
+    const deleteArgs = { force: 'True' }
     primaryKeys.map((key, index) => {
       if (key === 'id') {
         deleteArgs[`_${key}`] = row.row[`_${key}`]
@@ -74,7 +67,6 @@ const headerColumnButtons = function headerColumnButtons (MDUrl, object, primary
             MDUrl={MDUrl}
             closeUpdate={updateFunc}
             defaults={row.row}
-            icon={getEditIcon}
             object={object}
             title={`Edit Row ${rowIndex}`}
           />
@@ -98,16 +90,21 @@ const headerColumnButtons = function headerColumnButtons (MDUrl, object, primary
   }
 }
 
-// eslint-disable-next-line max-params
+// eslint-disable-next-line max-lines-per-function,max-params
 export const convertColumns = function convertColumns (MDUrl, object, fieldList, fieldTypes, primaryKeys, updateFunc) {
   const fieldListCopy = fieldList.slice()
   fieldListCopy.unshift('Edit')
   return fieldListCopy.map((key, index) => {
-    const colDef = { 'Header': key, 'accessor': key }
+    const colDef = { Header: key, accessor: key }
     switch (key) {
       case 'Edit':
         // eslint-disable-next-line react/display-name
-        colDef.Cell = headerColumnButtons(MDUrl, object, primaryKeys, updateFunc)
+        colDef.Cell = headerColumnButtons(
+          MDUrl,
+          object,
+          primaryKeys,
+          updateFunc
+        )
         colDef.filterable = false
         break
       case 'id':
@@ -152,8 +149,14 @@ export const convertColumns = function convertColumns (MDUrl, object, fieldList,
 export const getData = function getData (MDUrl, object, filtered, pageSize, pageNum, updateFunc) {
   return new Promise((resolve, reject) => {
     Axios.get(`${MDUrl}/objectinfo/${object}`).then((res) => {
-      const whereArgs = filteredWhereArgs(res.data.field_types, filtered)
-      Axios.get(`${MDUrl}/objectinfo/${object}`, { 'params': whereArgs }).then((whereRes) => {
+      const whereArgs = filteredWhereArgs(
+        res.data.field_types,
+        filtered
+      )
+      Axios.get(
+`${MDUrl}/objectinfo/${object}`,
+{ params: whereArgs }
+      ).then((whereRes) => {
         const recordCount = whereRes.data.record_count
         const columns = convertColumns(
           MDUrl,
@@ -166,11 +169,14 @@ export const getData = function getData (MDUrl, object, filtered, pageSize, page
         whereArgs.items_per_page = pageSize
         // eslint-disable-next-line no-magic-numbers
         whereArgs.page_number = pageNum + 1
-        Axios.get(`${MDUrl}/${object}`, { 'params': whereArgs }).then((pagesRes) => {
+        Axios.get(
+`${MDUrl}/${object}`,
+{ params: whereArgs }
+        ).then((pagesRes) => {
           resolve({
             columns,
-            'numPages': Math.ceil(recordCount / pageSize),
-            'objList': pagesRes.data
+            numPages: Math.ceil(recordCount / pageSize),
+            objList: pagesRes.data
           })
         })
           .catch(reject)

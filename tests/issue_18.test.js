@@ -24,7 +24,10 @@ module.exports = {
     // Wait for the `name` filter field to show up
     browser.waitForElementPresent('#root > div > main > div:nth-child(2) > div.ReactTable > div.rt-table > div.rt-thead.-filters > div > div:nth-child(6) > input[type=text]')
     // Enter a short string in the filter field for `name`
-    browser.setValue('#root > div > main > div:nth-child(2) > div.ReactTable > div.rt-table > div.rt-thead.-filters > div > div:nth-child(6) > input[type=text]', 'mem')
+    browser.setValue(
+      '#root > div > main > div:nth-child(2) > div.ReactTable > div.rt-table > div.rt-thead.-filters > div > div:nth-child(6) > input[type=text]',
+      'mem'
+    )
     browser.pause(saveTime)
     // Verify the member_of relationship is in the table
     browser.expect.element('#root').text.to.contain('member_of')
