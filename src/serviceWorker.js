@@ -26,8 +26,8 @@ exports.register = function register (config) {
   // eslint-disable-next-line no-process-env
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
-    // eslint-disable-next-line no-process-env
     const publicUrl = new URL(
+      // eslint-disable-next-line no-process-env
       process.env.PUBLIC_URL,
       window.location.href
     )

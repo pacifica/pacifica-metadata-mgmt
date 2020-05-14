@@ -355,7 +355,7 @@ formData,
 ).toLowerCase()}`}
         onClick={this.handleOpen}
       >
-        {icon()}
+        <icon />
       </IconButton>
 
     )
