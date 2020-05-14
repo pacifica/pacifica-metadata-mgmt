@@ -26,7 +26,13 @@ before_script:
     npm run e2e-nginx-conf
     npm run e2e-selenium-start &
     test -e /usr/sbin/nginx && npm run e2e-nginx-start &
-    sleep 20
+  - curl -o wait-for-it https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
+  - chmod +x wait-for-it
+  - ./wait-for-it 127.0.0.1:4444
+  - ./wait-for-it 127.0.0.1:8121
+  - ./wait-for-it 127.0.0.1:8181
+  - ./wait-for-it 127.0.0.1:8080
+  - ./wait-for-it 127.0.0.1:3000
   - netstat -tulpn | grep LISTEN
 
 services:
