@@ -1,7 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import AppBar from '@material-ui/core/AppBar'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import ChevronByDirection from './CheveronByDirection'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Divider from '@material-ui/core/Divider'
 import Drawer from '@material-ui/core/Drawer'
@@ -20,148 +19,147 @@ import { getObjectList } from './PacificaAPI'
 import { withStyles } from '@material-ui/core/styles'
 
 const drawerWidth = 240
+const appTitle = 'Pacifica Metadata Management'
 
 // eslint-disable-next-line max-lines-per-function
 const styles = function styles (theme) {
   return ({
-    'appBar': {
-      'transition': theme.transitions.create([
-        'margin',
-        'width'
-      ], {
-        'duration': theme.transitions.duration.leavingScreen,
-        'easing': theme.transitions.easing.sharp
-      })
+    appBar: {
+      transition: theme.transitions.create(
+        [
+          'margin',
+          'width'
+        ],
+        {
+          duration: theme.transitions.duration.leavingScreen,
+          easing: theme.transitions.easing.sharp
+        }
+      )
     },
-    'appBarShift': {
-      'marginLeft': drawerWidth,
-      'transition': theme.transitions.create([
-        'margin',
-        'width'
-      ], {
-        'duration': theme.transitions.duration.enteringScreen,
-        'easing': theme.transitions.easing.easeOut
-      }),
-      'width': `calc(100% - ${drawerWidth}px)`
+    appBarShift: {
+      marginLeft: drawerWidth,
+      transition: theme.transitions.create(
+        [
+          'margin',
+          'width'
+        ],
+        {
+          duration: theme.transitions.duration.enteringScreen,
+          easing: theme.transitions.easing.easeOut
+        }
+      ),
+      width: `calc(100% - ${drawerWidth}px)`
     },
-    'content': {
-      'flexGrow': 1,
-      'marginLeft': -drawerWidth,
+    content: {
+      flexGrow: 1,
+      marginLeft: -drawerWidth,
       // eslint-disable-next-line no-magic-numbers
-      'padding': theme.spacing.unit * 3,
-      'transition': theme.transitions.create('margin', {
-        'duration': theme.transitions.duration.leavingScreen,
-        'easing': theme.transitions.easing.sharp
-      })
+      padding: theme.spacing.unit * 3,
+      transition: theme.transitions.create(
+        'margin',
+        {
+          duration: theme.transitions.duration.leavingScreen,
+          easing: theme.transitions.easing.sharp
+        }
+      )
     },
-    'contentShift': {
-      'marginLeft': 0,
-      'transition': theme.transitions.create('margin', {
-        'duration': theme.transitions.duration.enteringScreen,
-        'easing': theme.transitions.easing.easeOut
-      })
+    contentShift: {
+      marginLeft: 0,
+      transition: theme.transitions.create(
+        'margin',
+        {
+          duration: theme.transitions.duration.enteringScreen,
+          easing: theme.transitions.easing.easeOut
+        }
+      )
     },
-    'drawer': {
-      'flexShrink': 0,
-      'width': drawerWidth
+    drawer: {
+      flexShrink: 0,
+      width: drawerWidth
     },
-    'drawerHeader': {
-      'alignItems': 'center',
-      'display': 'flex',
-      'padding': '0 8px',
+    drawerHeader: {
+      alignItems: 'center',
+      display: 'flex',
+      padding: '0 8px',
       ...theme.mixins.toolbar,
       // eslint-disable-next-line sort-keys
-      'justifyContent': 'flex-end'
+      justifyContent: 'flex-end'
     },
-    'drawerPaper': {
-      'width': drawerWidth
+    drawerPaper: {
+      width: drawerWidth
     },
-    'hide': {
-      'display': 'none'
+    hide: {
+      display: 'none'
     },
-    'menuButton': {
-      'marginLeft': 12,
-      'marginRight': 20
+    menuButton: {
+      marginLeft: 12,
+      marginRight: 20
     },
-    'root': {
-      'display': 'flex'
+    root: {
+      display: 'flex'
     }
   })
 }
 
-const ChevronByDirection = function ChevronByDirection ({ direction }) {
-  if (direction === 'ltr') {
-    return (
-      <ChevronLeftIcon />
-    )
-  }
-  return (
-    <ChevronRightIcon />
-  )
-}
-
-ChevronByDirection.propTypes = {
-  'direction': PropTypes.oneOf([
-    'ltr',
-    'gtr'
-  ]).isRequired
-}
-
 class App extends React.Component {
   static propTypes = {
-    'MDUrl': PropTypes.string.isRequired,
-    'classes': PropTypes.shape({
-      'appBar': PropTypes.string.isRequired,
-      'appBarShift': PropTypes.string.isRequired,
-      'content': PropTypes.string.isRequired,
-      'contentShift': PropTypes.string.isRequired,
-      'drawer': PropTypes.string.isRequired,
-      'drawerHeader': PropTypes.string.isRequired,
-      'drawerPaper': PropTypes.string.isRequired,
-      'hide': PropTypes.string.isRequired,
-      'menuButton': PropTypes.string.isRequired,
-      'root': PropTypes.string.isRequired
+    MDUrl: PropTypes.string.isRequired,
+    classes: PropTypes.shape({
+      appBar: PropTypes.string.isRequired,
+      appBarShift: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      contentShift: PropTypes.string.isRequired,
+      drawer: PropTypes.string.isRequired,
+      drawerHeader: PropTypes.string.isRequired,
+      drawerPaper: PropTypes.string.isRequired,
+      hide: PropTypes.string.isRequired,
+      menuButton: PropTypes.string.isRequired,
+      root: PropTypes.string.isRequired
     }).isRequired,
-    'theme': PropTypes.shape({
-      'direction': PropTypes.oneOf([
+    theme: PropTypes.shape({
+      direction: PropTypes.oneOf([
         'ltr',
         'gtr'
       ]).isRequired,
-      'withTheme': PropTypes.bool
+      withTheme: PropTypes.bool
     }).isRequired
   }
 
   constructor (props) {
     super(props)
     this.state = {
-      'objectList': ['users'],
-      'open': false,
-      'selectedObject': 'users'
+      objectList: ['users'],
+      open: false,
+      selectedObject: 'users'
     }
     this.dynamicTableElement = React.createRef()
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this)
     this.handleDrawerClose = this.handleDrawerClose.bind(this)
   }
 
-  selectObject (text) {
-    // eslint-disable-next-line no-console
-    this.dynamicTableElement.current.updateData(text).catch((err) => console.log(err))
-    this.setState({ 'selectedObject': text })
+  static shouldComponentUpdate () {
+    return false
+  }
+
+  handleDrawerClose () {
+    this.setState({ open: false })
   }
 
   handleDrawerOpen () {
     const { MDUrl } = this.props
     getObjectList(MDUrl).then((res) => {
       this.setState({
-        'objectList': res.data.available_objects,
-        'open': true
+        objectList: res.data.available_objects,
+        open: true
       })
     })
-      .catch((res) => { this.setState({ 'open': false }) })
+      .catch((res) => { this.setState({ open: false }) })
   }
 
-  handleDrawerClose () {
-    this.setState({ 'open': false })
+  selectObject (text) {
+    // eslint-disable-next-line no-console
+    this.dynamicTableElement.current.updateData(text).catch((err) => console.log(err))
+    this.setState({ selectedObject: text })
   }
 
   iterateOverList (items, index) {
@@ -169,11 +167,17 @@ class App extends React.Component {
       itemId,
       itemPrimary
     ] = items
-    const boundItemClick = this.selectObject.bind(this, itemId)
+    const boundItemClick = this.selectObject.bind(
+      this,
+      itemId
+    )
     return (
       <ListItem
         button
-        id={`listitem-${itemId.replace(/_/gu, '-')}`}
+        id={`listitem-${itemId.replace(
+          /_/gu,
+          '-'
+          )}`}
         key={itemId}
         // eslint-disable-next-line react/jsx-no-bind
         onClick={boundItemClick}
@@ -193,16 +197,22 @@ class App extends React.Component {
         <CssBaseline />
         <AppBar
           // eslint-disable-next-line react/forbid-component-props
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: open
-          })}
+          className={classNames(
+            classes.appBar,
+            {
+              [classes.appBarShift]: open
+            }
+          )}
           position="fixed"
         >
           <Toolbar disableGutters={!open}>
             <IconButton
               aria-label="Open drawer"
               // eslint-disable-next-line react/forbid-component-props
-              className={classNames(classes.menuButton, open && classes.hide)}
+              className={classNames(
+                classes.menuButton,
+                open && classes.hide
+              )}
               color="inherit"
               id="header-open-drawer"
               onClick={this.handleDrawerOpen}
@@ -215,7 +225,7 @@ class App extends React.Component {
               noWrap
               variant="h6"
             >
-              {'Pacifica Metadata Management'}
+              {appTitle}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -224,7 +234,7 @@ class App extends React.Component {
           // eslint-disable-next-line react/forbid-component-props
           className={classes.drawer}
           classes={{
-            'paper': classes.drawerPaper
+            paper: classes.drawerPaper
           }}
           open={open}
           variant="persistent"
@@ -244,9 +254,12 @@ class App extends React.Component {
           </List>
         </Drawer>
         <main
-          className={classNames(classes.content, {
-            [classes.contentShift]: open
-          })}
+          className={classNames(
+            classes.content,
+            {
+              [classes.contentShift]: open
+            }
+          )}
         >
           <div className={classes.drawerHeader} />
           <DynamicTable
@@ -260,4 +273,7 @@ class App extends React.Component {
   }
 }
 
-export default withStyles(styles, { 'withTheme': true })(App)
+export default withStyles(
+  styles,
+  { withTheme: true }
+)(App)

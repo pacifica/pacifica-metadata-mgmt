@@ -13,52 +13,55 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 
+const defaultFormText = 'Nothing to see here.'
+const unknownColumnTypeTitle = 'Some unknown column type was given.'
+
 const styles = function styles (theme) {
   return ({
-    'paper': {
-      'backgroundColor': theme.palette.background.paper,
+    paper: {
+      backgroundColor: theme.palette.background.paper,
       // eslint-disable-next-line no-magic-numbers
-      'boxShadow': theme.shadows[5],
-      'outline': 'none',
+      boxShadow: theme.shadows[5],
+      outline: 'none',
       // eslint-disable-next-line no-magic-numbers
-      'padding': theme.spacing.unit * 4,
-      'position': 'absolute',
+      padding: theme.spacing.unit * 4,
+      position: 'absolute',
       // eslint-disable-next-line no-magic-numbers
-      'width': theme.spacing.unit * 100
+      width: theme.spacing.unit * 100
     }
   })
 }
 
 class SimpleModal extends React.Component {
   static propTypes = {
-    'MDUrl': PropTypes.string.isRequired,
-    'classes': PropTypes.shape({
-      'paper': PropTypes.string.isRequired
+    MDUrl: PropTypes.string.isRequired,
+    classes: PropTypes.shape({
+      paper: PropTypes.string.isRequired
     }).isRequired,
-    'closeUpdate': PropTypes.func,
+    closeUpdate: PropTypes.func,
     // eslint-disable-next-line react/forbid-prop-types
-    'defaults': PropTypes.object,
-    'icon': PropTypes.func.isRequired,
-    'object': PropTypes.string.isRequired,
-    'title': PropTypes.string.isRequired
+    defaults: PropTypes.object,
+    icon: PropTypes.func.isRequired,
+    object: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
   }
 
   static defaultProps = {
     // eslint-disable-next-line no-empty-function
-    'closeUpdate': () => {},
-    'defaults': {}
+    closeUpdate: () => {},
+    defaults: {}
   }
 
   constructor (props) {
     super(props)
     this.state = {
-      'formData': {},
-      'formInputs': (
+      formData: {},
+      formInputs: (
         <Typography>
-          {'Nothing to see here'}
+          {defaultFormText}
         </Typography>),
-      'open': false,
-      'primaryKeys': []
+      open: false,
+      primaryKeys: []
     }
     this.updateFormInput = this.updateFormInput.bind(this)
     this.formLayoutColumns = this.formLayoutColumns.bind(this)
@@ -68,10 +71,14 @@ class SimpleModal extends React.Component {
     this.handleOpen = this.handleOpen.bind(this)
   }
 
+  static shouldComponentUpdate () {
+    return false
+  }
+
   updateFormInput (input, value) {
     this.setState((prevState) => ({
       ...prevState,
-      'formData': {
+      formData: {
         ...prevState.formData,
         [input]: value
       }
@@ -88,14 +95,20 @@ class SimpleModal extends React.Component {
         xs={12}
       >
         <TextField
-          InputLabelProps={{ 'shrink': true }}
+          InputLabelProps={{ shrink: true }}
           defaultValue={formData[key]}
-          id={`modal-input-${key.replace(/_/gu, '-')}`}
+          id={`modal-input-${key.replace(
+/_/gu,
+'-'
+)}`}
           key={key}
           label={key}
           // eslint-disable-next-line react/jsx-no-bind
           onChange={(event) => {
-            this.updateFormInput(key, event.target.value)
+            this.updateFormInput(
+              key,
+              event.target.value
+            )
           }}
           type={`${type}-local`}
         />
@@ -108,18 +121,27 @@ class SimpleModal extends React.Component {
     return (
       <Grid
         item
-        key={key.replace(/_/gu, '-')}
+        key={key.replace(
+          /_/gu,
+          '-'
+        )}
         sm={6}
         xs={12}
       >
         <TextField
-          InputLabelProps={{ 'shrink': true }}
+          InputLabelProps={{ shrink: true }}
           defaultValue={formData[actualKey]}
-          id={`modal-input-${key.replace(/_/gu, '-')}`}
+          id={`modal-input-${key.replace(
+/_/gu,
+'-'
+)}`}
           label={key}
           // eslint-disable-next-line react/jsx-no-bind
           onChange={(event) => {
-            this.updateFormInput(actualKey, event.target.value)
+            this.updateFormInput(
+              actualKey,
+              event.target.value
+            )
           }}
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...extraprops}
@@ -142,11 +164,19 @@ class SimpleModal extends React.Component {
         </Typography>
         <Checkbox
           defaultChecked={formData[key]}
-          id={`modal-input-${key.replace(/_/gu, '-')}`}
+          id={
+            `modal-input-${key.replace(
+            /_/gu,
+            '-'
+            )}`
+          }
           label={key}
           // eslint-disable-next-line react/jsx-no-bind
           onChange={(event) => {
-            this.updateFormInput(key, event.target.checked)
+            this.updateFormInput(
+              key,
+              event.target.checked
+            )
           }}
           value={key}
         />
@@ -166,7 +196,7 @@ class SimpleModal extends React.Component {
       >
         <Typography>
           <p>
-            {'Some unknown column type was given'}
+            {unknownColumnTypeTitle}
           </p>
           <pre>
             {formData}
@@ -176,6 +206,8 @@ class SimpleModal extends React.Component {
     )
   }
 
+  // Huge case statement can't do much about
+  // eslint-disable-next-line max-lines-per-function
   formLayoutColumns (fieldList, fieldTypes, primaryKeys) {
     return (
       <FormControl component="fieldset">
@@ -187,24 +219,46 @@ class SimpleModal extends React.Component {
             let actualKey = key
             switch (fieldTypes[key]) {
               case 'DATETIME':
-                return this.fieldDefDatetime(key, 'datetime')
+                return this.fieldDefDatetime(
+                  key,
+                  'datetime'
+                )
               case 'DATE':
-                return this.fieldDefDatetime(key, 'date')
+                return this.fieldDefDatetime(
+                  key,
+                  'date'
+                )
               case 'VARCHAR':
               case 'TEXT':
                 if (primaryKeys.includes(key)) {
                   actualKey = `_${key}`
                 }
-                return this.fieldDefText(actualKey, key, { 'multiline': fieldTypes[key] === 'TEXT' })
+                return this.fieldDefText(
+                  actualKey,
+                  key,
+                  { multiline: fieldTypes[key] === 'TEXT' }
+                )
               case 'UUID':
-                return this.fieldDefText(key, key, { 'multiline': false })
+                return this.fieldDefText(
+                  key,
+                  key,
+                  { multiline: false }
+                )
               case 'INT':
               case 'BIGINT':
-                return this.fieldDefText(key, key, { 'type': 'number' })
+                return this.fieldDefText(
+                  key,
+                  key,
+                  { type: 'number' }
+                )
               case 'BOOL':
                 return this.fieldDefCheckbox(key)
               case 'AUTO':
-                return this.fieldDefText(`_${key}`, key, {})
+                return this.fieldDefText(
+                  `_${key}`,
+                  key,
+                  {}
+                )
               default:
                 return this.fieldDefError(fieldTypes[key])
             }
@@ -219,15 +273,15 @@ class SimpleModal extends React.Component {
     return new Promise((resolve, reject) => {
       Axios.get(`${MDUrl}/objectinfo/${object}`).then((res) => {
         this.setState({
-          'formData': defaults
+          formData: defaults
         })
         this.setState({
-          'formInputs': this.formLayoutColumns(
+          formInputs: this.formLayoutColumns(
             res.data.field_list,
             res.data.field_types,
             res.data.primary_keys
           ),
-          'primaryKeys': res.data.primary_keys
+          primaryKeys: res.data.primary_keys
         })
         resolve(res)
       })
@@ -237,7 +291,7 @@ class SimpleModal extends React.Component {
 
   handleClose () {
     const { closeUpdate } = this.props
-    this.setState({ 'open': false })
+    this.setState({ open: false })
     closeUpdate()
   }
 
@@ -257,16 +311,24 @@ class SimpleModal extends React.Component {
         return formData[actualKey]
       })
     }
-    method(`${MDUrl}/${object}`, formData, {
-      params
-    }).then((res) => {
+    method(
+`${MDUrl}/${object}`,
+formData,
+{
+  params
+}
+    ).then((res) => {
       // eslint-disable-next-line no-console
       console.log(res)
       this.handleClose()
     })
       .catch((res) => {
-        // eslint-disable-next-line no-magic-numbers
-        const consoleMsg = JSON.stringify(res, null, 2)
+        const consoleMsg = JSON.stringify(
+          res,
+          null,
+          // eslint-disable-next-line no-magic-numbers
+          2
+        )
         const { traceback } = res.response.data
         // eslint-disable-next-line no-console
         console.log(consoleMsg)
@@ -277,7 +339,7 @@ class SimpleModal extends React.Component {
 
   handleOpen () {
     this.getFormLayout().then((res) => {
-      this.setState({ 'open': true })
+      this.setState({ open: true })
     })
   }
 
@@ -287,7 +349,10 @@ class SimpleModal extends React.Component {
       <IconButton
         aria-label={`Open ${title}`}
         color="inherit"
-        id={`modal-button-${title.replace(/ /gu, '-').toLowerCase()}`}
+        id={`modal-button-${title.replace(
+/ /gu,
+'-'
+).toLowerCase()}`}
         onClick={this.handleOpen}
       >
         {icon()}
@@ -326,9 +391,9 @@ class SimpleModal extends React.Component {
           <div
             className={paper}
             style={{
-              'left': '50%',
-              'top': '50%',
-              'transform': 'translate(-50%, -50%)'
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)'
             }}
           >
             {this.titleText()}

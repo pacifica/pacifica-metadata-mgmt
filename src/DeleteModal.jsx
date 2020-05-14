@@ -8,57 +8,70 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 
+const confirmDeleteTitle = 'Confirm to Delete'
+
 const styles = function styles (theme) {
   return ({
-    'paper': {
-      'backgroundColor': theme.palette.background.paper,
+    paper: {
+      backgroundColor: theme.palette.background.paper,
       // eslint-disable-next-line no-magic-numbers
-      'boxShadow': theme.shadows[5],
-      'outline': 'none',
+      boxShadow: theme.shadows[5],
+      outline: 'none',
       // eslint-disable-next-line no-magic-numbers
-      'padding': theme.spacing.unit * 4,
-      'position': 'absolute',
+      padding: theme.spacing.unit * 4,
+      position: 'absolute',
       // eslint-disable-next-line no-magic-numbers
-      'width': theme.spacing.unit * 100
+      width: theme.spacing.unit * 100
     }
   })
 }
 
 class DeleteModal extends React.Component {
   static propTypes = {
-    'MDUrl': PropTypes.string.isRequired,
-    'classes': PropTypes.shape({
-      'paper': PropTypes.string.isRequired
+    MDUrl: PropTypes.string.isRequired,
+    classes: PropTypes.shape({
+      paper: PropTypes.string.isRequired
     }).isRequired,
     // eslint-disable-next-line react/forbid-prop-types
-    'deleteArgs': PropTypes.object.isRequired,
-    'object': PropTypes.string.isRequired,
-    'rowIndex': PropTypes.number.isRequired,
-    'updateFunc': PropTypes.func.isRequired
+    deleteArgs: PropTypes.object.isRequired,
+    object: PropTypes.string.isRequired,
+    rowIndex: PropTypes.number.isRequired,
+    updateFunc: PropTypes.func.isRequired
   }
 
   constructor (props) {
     super(props)
     this.state = {
-      'open': false
+      open: false
     }
     this.handleClose = this.handleClose.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
   }
 
+  static shouldComponentUpdate () {
+    return false
+  }
+
   handleDelete () {
     const { MDUrl, object, deleteArgs } = this.props
-    Axios.delete(`${MDUrl}/${object}`, {
-      'params': deleteArgs
-    }).then((res) => {
+    Axios.delete(
+      `${MDUrl}/${object}`,
+      {
+        params: deleteArgs
+      }
+    ).then((res) => {
       // eslint-disable-next-line no-console
       console.log(res)
       this.handleClose()
     })
       .catch((res) => {
-        // eslint-disable-next-line no-magic-numbers
-        const consoleMsg = JSON.stringify(res, null, 2)
+        const consoleMsg = JSON.stringify(
+          res,
+          null,
+          // eslint-disable-next-line no-magic-numbers
+          2
+        )
         const { traceback } = res.response.data
         // eslint-disable-next-line no-console
         console.log(consoleMsg)
@@ -69,12 +82,12 @@ class DeleteModal extends React.Component {
 
   handleClose () {
     const { updateFunc } = this.props
-    this.setState({ 'open': false })
+    this.setState({ open: false })
     updateFunc()
   }
 
   handleOpen () {
-    this.setState({ 'open': true })
+    this.setState({ open: true })
   }
 
   // eslint-disable-next-line max-lines-per-function
@@ -103,9 +116,9 @@ class DeleteModal extends React.Component {
             className={paper}
             id="delete-modal"
             style={{
-              'left': '50%',
-              'top': '50%',
-              'transform': 'translate(-50%, -50%)'
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)'
             }}
           >
             <Typography
@@ -114,7 +127,7 @@ class DeleteModal extends React.Component {
               noWrap
               variant="h6"
             >
-              {'Confirm to Delete'}
+              {confirmDeleteTitle}
             </Typography>
             <Typography
               color="inherit"

@@ -30,15 +30,24 @@ module.exports = {
     // Wait for the window to render the input Project ID
     browser.waitForElementPresent('input[id=modal-input-project]')
     // Enter a valid Project ID
-    browser.setValue('input[id=modal-input-project]', '1235')
+    browser.setValue(
+      'input[id=modal-input-project]',
+      '1235'
+    )
     // Wait for the window to render the input Instrument ID
     browser.waitForElementPresent('input[id=modal-input-instrument]')
     // Enter a valid Instrument ID
-    browser.setValue('input[id=modal-input-instrument]', '104')
+    browser.setValue(
+      'input[id=modal-input-instrument]',
+      '104'
+    )
     // Wait for the window to render the input Relationship UUID
     browser.waitForElementPresent('input[id=modal-input-relationship]')
     // Enter a valid Relationship UUID (hard coded uuid of test relationship 2)
-    browser.setValue('input[id=modal-input-relationship]', '69fb126a-a97a-4709-b9ce-58b3f84bdcb7')
+    browser.setValue(
+      'input[id=modal-input-relationship]',
+      '69fb126a-a97a-4709-b9ce-58b3f84bdcb7'
+    )
     // Save the Project Instrument entry
     browser.click('button[id=modal-button-save]')
     browser.pause(pauseTime)

@@ -28,7 +28,10 @@ module.exports = {
     browser.pause(pauseTime)
     // Wait for the `middle initial` input to show up
     browser.waitForElementPresent('input[id=modal-input-middle-initial]')
-    browser.setValue('input[id=modal-input-middle-initial]', 'something_that_does_not_exist')
+    browser.setValue(
+      'input[id=modal-input-middle-initial]',
+      'something_that_does_not_exist'
+    )
     browser.pause(pauseTime)
     browser.click('button[id=modal-button-save]')
     browser.pause(saveTime)

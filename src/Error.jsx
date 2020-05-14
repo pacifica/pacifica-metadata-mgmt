@@ -1,22 +1,23 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
+const errorTitle = 'Something Went Wrong!'
+
 class ErrorBoundary extends React.Component {
   static propTypes = {
-    'children': PropTypes.element
+    children: PropTypes.element
   }
 
   static defaultProps = {
-    'children': null
+    children: null
   }
 
   constructor (props) {
     super(props)
-    this.state = { 'error': null, 'errorInfo': null }
+    this.state = { error: null, errorInfo: null }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  shouldComponentUpdate () {
+  static shouldComponentUpdate () {
     return false
   }
 
@@ -34,9 +35,9 @@ class ErrorBoundary extends React.Component {
       return (
         <div>
           <h2>
-            {'Something went wrong.'}
+            {errorTitle}
           </h2>
-          <details style={{ 'whiteSpace': 'pre-wrap' }}>
+          <details style={{ whiteSpace: 'pre-wrap' }}>
             {error && error.toString()}
             <br />
             {errorInfo.componentStack}

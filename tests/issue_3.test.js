@@ -1,4 +1,5 @@
 /* eslint-disable max-statements */
+/* eslint-disable max-lines-per-function */
 const pauseTime = 100
 const saveTime = 200
 module.exports = {
@@ -29,11 +30,17 @@ module.exports = {
     // Wait for the window to render the input User ID
     browser.waitForElementPresent('input[id=modal-input-user]')
     // Enter a valid User ID
-    browser.setValue('input[id=modal-input-user]', '10')
+    browser.setValue(
+      'input[id=modal-input-user]',
+      '10'
+    )
     // Wait for the window to render the input Group ID
     browser.waitForElementPresent('input[id=modal-input-group]')
     // Enter a valid Group ID
-    browser.setValue('input[id=modal-input-group]', '1000')
+    browser.setValue(
+      'input[id=modal-input-group]',
+      '1000'
+    )
     // Save the User Group entry
     browser.click('button[id=modal-button-save]')
     browser.pause(saveTime)
