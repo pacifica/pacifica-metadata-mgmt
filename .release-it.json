@@ -3,6 +3,6 @@
     "release": true
   },
   "git": {
-    "pushRepo": "https://github.com/pacifica/pacifica.git"
+    "pushRepo": "https://github.com/pacifica/pacifica-metadata-mgmt.git"
   }
 }
