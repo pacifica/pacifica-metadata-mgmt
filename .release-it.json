@@ -1,5 +1,8 @@
 {
   "github": {
     "release": true
+  },
+  "git": {
+    "pushRepo": "https://github.com/pacifica/pacifica.git"
   }
 }
